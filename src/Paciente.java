@@ -1,0 +1,101 @@
+public class Paciente{
+        String nome;
+        int idade;
+        String cpf;
+        String telefone;
+        String dinheiro;
+        String planoSaude;
+
+
+    public void Paciente(){
+            this.nome = "";
+            this.idade = 0;
+            this.cpf = "";
+            this.telefone = "";
+            this.dinheiro = "";
+            this.planoSaude = "";
+        }
+              public void Paciente(String nome, int idade, String cpf, String telefone, String dinheiro, String planoSaude ){
+            this.nome = nome;
+            this.idade = idade;
+            this.cpf = cpf;
+            this.telefone = telefone;
+            this.dinheiro = dinheiro;
+            this.planoSaude = planoSaude;
+        }
+
+        public Paciente(String info){
+                String[] partes= info.split(";");
+                this.nome = partes[0];
+                this.cpf = partes[1];
+                this.idade = Integer.parseInt(partes[2]);
+                this.telefone = partes[3];
+                this.dinheiro = partes[4];
+                this.planoSaude = partes[5];
+        }
+
+        public int plano(String info){
+            String[] planos = new String[4];
+            planos[0]="Sem Plano"; //00  - 0% de desconto   HAHAHA POBRE MAKE DE L
+            planos[1]="Militar";   //01  - 50% de desconto
+            planos[2]="Politico";  //02  - 100% de desconto   PEC DA BLINDAGEM HOSPITALAR
+            planos[3]="Especial";  //03  - 100% de desconto
+            planos[4]="Particular";//04  - 30% de desconto
+
+            if(info.equals(planos[1])){
+                return 1;
+            }
+            else if (info.equals(planos[2])) {
+                return 2;
+            }
+            else if (info.equals(planos[3])) {
+                return 3;
+            } else if (info.equals(planos[4])) {
+                return 4;
+            } else{
+                return 0;
+            }
+        }
+
+
+
+        public void setNome(String nome){
+            this.nome=nome;
+        }
+        public void setTelefone(String telefone){
+            this.telefone=telefone;
+        }
+        public void setCpf(String cpf) {
+            this.cpf = cpf;
+        }
+        public void setIdade(int idade) {
+            this.idade = idade;
+        }
+        public void setDinheiro(String dinheiro){
+            this.dinheiro=dinheiro;
+        }
+
+        public int getIdade(){
+            return idade;
+        }
+        public String getCpf() {
+            return cpf;
+        }
+        public String getDinheiro(){
+            return dinheiro;
+        }
+        public String getNome(){
+            return nome;
+        }
+        public String getTelefone(){
+            return telefone;
+        }
+        public void getInfo(){
+            System.out.println("==========================");
+            System.out.println("Nome : " + getNome());
+            System.out.println("Idade : " + getIdade());
+            System.out.println("CPF : " + getCpf());
+            System.out.println("Telefone : "+getTelefone());
+            System.out.println("==========================");
+        }
+}
