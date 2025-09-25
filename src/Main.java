@@ -7,7 +7,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         char entrada = '0';
         ArrayList<String> listaPaciente = new ArrayList<String>();
-        ArrayList<String> listaMedico = new ArrayList<String>();
+        ArrayList<String> listaMedico = new ArrayList<>();
         ArrayList<String> listaConsulta = new ArrayList<String>();
         listaPaciente = CSV.relerPaciente();
         while(!(entrada == 'X')) {
@@ -62,33 +62,50 @@ public class Main {
                             System.out.println("1: Cadastrar Pacientes");
                             System.out.println("2: Ver Pacientes Cadastrados :");
                             System.out.println("3: Pesquisar Paciente");
+                            System.out.println("4: Ver histórico de consultas de um paciente");
                             System.out.println("V: para voltar");
                             System.out.println("==========================");
                             entrada2 = scan.next().toUpperCase().charAt(0);
                             scan.nextLine();
 
                             switch (entrada2) {
-                                case '1' -> {
+                                case '1' -> { //1: Cadastrar Pacientes
                                     System.out.println("Escreva na ordem Nome;Cpf;Idade;Telefone;PlanoSaude;Dinheiro");
                                     String info = scan.nextLine();
-                                    listaPaciente=CSV.relerPaciente();
                                     Paciente paciente = new Paciente(info);
+                                    listaPaciente=CSV.relerPaciente();
                                     if(!paciente.compCpf(paciente.pegaCpf(info), listaPaciente)) {
                                         CSV.CSV_Paciente(paciente);
-                                        System.out.println("Pessoa Registrada");
+                                        System.out.println("Pessoa registrada:");
                                         paciente.getInfo();
                                     }
                                     else{
                                         System.out.println("CPF já encontrado");
+                                        System.out.println("Não foi possível registrar");
                                     }
                                 }
-                                case '2' -> {
+                                case '2' -> { //2: Ver Pacientes Cadastrados :
                                     CSV.lerPaciente();
                                 }
-                                case '3' ->{ // Mudar Info
+                                case '3' ->{ //3: Pesquisar Paciente
                                     System.out.println("Escreva o CPF do Paciente");
                                     Tester.lerArrayList(listaPaciente);
-
+                                }
+                                case '4' ->{ //4: Ver histórico de consultas de um paciente
+                                    System.out.println("Escreva o CPF do Paciente");
+                                    String cpf = scan.nextLine();
+                                    Paciente paciente = new Paciente();
+                                    ArrayList<String> consultaPaciente = new ArrayList<>();
+                                    consultaPaciente = paciente.getConsultas(cpf);
+                                    if(paciente.compCpf(cpf, consultaPaciente)) {
+                                        for (String s : consultaPaciente) {
+                                            String[] partes = s.split(";");
+                                            System.out.println("Paciente: " + partes[0] + ", Médico: " + partes[2] + ", Data: " + partes[4] + ", Hora: " + partes[5] + ", Motivo: " + partes[6]);
+                                        }
+                                    }
+                                    else{
+                                        System.out.println("Nenhum histórico de consultas encontrados para esse paciente");
+                                    }
                                 }
                                 case 'V' -> {
                                     break;
@@ -105,8 +122,8 @@ public class Main {
                         char entrada2 = '0';
                         while (!(entrada2 == 'V')) {
                             System.out.println("==========================");
-                            System.out.println("1: Cadastrar Consultas");
-                            System.out.println("2: Ver Consultas Cadastrados :");
+                            System.out.println("1: Cadastrar consultas");
+                            System.out.println("2: Ver todas consultas cadastrados :");
                             System.out.println("V: para voltar");
                             System.out.println("==========================");
                             entrada2 = scan.next().toUpperCase().charAt(0);
@@ -114,15 +131,22 @@ public class Main {
 
                             switch (entrada2) {
                                 case '1' -> { // Cadastrar consulas
-                                    System.out.println("Escreva na ordem Paciente;Medico;Data;Hora;Motivo");
+                                    System.out.println("Escreva Paciente;CPF do Paciente;Medico; CPF do Medico;Data;Hora;Motivo");
                                     String info = scan.nextLine();
                                     Consultas consulta = new Consultas(info);
-                                    consulta.getInfo();
-                                    CSV.CSV_Consulta(consulta);
-
+                                    listaConsulta=CSV.relerConsulta();
+                                    if(!consulta.compCpf(consulta.pegaCpfMedico(info), listaConsulta)) {
+                                        CSV.CSV_Consulta(consulta);
+                                        System.out.println("Consulta Registrada:");
+                                        consulta.getInfo();
+                                    }
+                                    else{
+                                        System.out.println("CPF já encontrado");
+                                        System.out.println("Não foi possível registrar");
+                                    }
                                 }
                                 case '2' -> {
-                                    System.out.println("Bolsonaro Consultas");
+                                    CSV.lerConsulta();
                                 }
                                 case 'V' -> {
                                     break;

@@ -7,9 +7,10 @@ public class Paciente{
         String telefone;
         String dinheiro;
         String planoSaude;
+        ArrayList<String> Consultas = new ArrayList<>();
 
 
-    public void Paciente(){
+    public Paciente(){
             this.nome = "";
             this.idade = 0;
             this.cpf = "";
@@ -17,7 +18,7 @@ public class Paciente{
             this.dinheiro = "";
             this.planoSaude = "";
     }
-    public void Paciente(String nome, int idade, String cpf, String telefone, String dinheiro, String planoSaude ){
+    public Paciente(String nome, int idade, String cpf, String telefone, String dinheiro, String planoSaude ){
             this.nome = nome;
             this.idade = idade;
             this.cpf = cpf;
@@ -34,9 +35,8 @@ public class Paciente{
                 this.telefone = partes[3];
                 this.dinheiro = partes[5];
                 this.planoSaude = partes[4];
-        }
-
-        public int plano(String info){
+    }
+    public int plano(String info){
             String[] planos = new String[4];
             planos[0]="Sem Plano"; //00  - 0% de desconto   HAHAHA POBRE MAKE DE L
             planos[1]="Militar";   //01  - 50% de desconto
@@ -58,7 +58,7 @@ public class Paciente{
                 return 0;
             }
         }
-        public boolean compCpf(String cpf,ArrayList<String> lista){
+    public boolean compCpf(String cpf,ArrayList<String> lista){
             for (String s : lista) {
                 String[] partes = s.split(";");
                 if (partes[1].trim().equals(cpf)) {
@@ -67,10 +67,25 @@ public class Paciente{
             }
         return false;
     }
-        public String pegaCpf(String info){
+    public String pegaCpf(String info){
         String[] partes = info.split(";");
         return partes[1];
+    }
+
+    //Ordem do CSV Consulta : Paciente; CPF do Paciente; Medico; CPF do Medico; Data; Hora; Motivo
+    public ArrayList<String> getConsultas(String cpf){
+        ArrayList<String> consultasTotais = CSV.relerConsulta();
+        ArrayList<String> consultas = new ArrayList<>();
+        for(String s: consultasTotais){
+            String[] partes = s.split(";");
+            if(partes[1].trim().equals(cpf)){
+                consultas.add(s);
+            }
         }
+        return consultas;
+    }
+
+
 
 
         public void setNome(String nome){
