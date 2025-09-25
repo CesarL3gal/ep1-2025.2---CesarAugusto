@@ -72,15 +72,17 @@ public class CSV {
             System.out.println("Deu erro na leitura rapaiz");
         }
     }
-    //@verride
-    public static void lerPaciente(ArrayList<String> lista) {
+    public static ArrayList<String> relerPaciente() {
+        ArrayList<String> lista= new ArrayList<String>();
         try{
+
             BufferedReader lerPaciente = new BufferedReader(new FileReader("Pacientes.CSV"));
             String linha;
+            lista.clear();
             while ((linha = lerPaciente.readLine()) != null) {
-
                 lista.add(linha);
             }
+            return lista;
         }
         catch(FileNotFoundException e){
             System.out.println("Não achou o arquivos");
@@ -88,10 +90,9 @@ public class CSV {
         catch(IOException e){
             System.out.println("Deu erro na leitura rapaiz");
         }
+        return lista;
     }
-    public int compPac(String cpf){
-return 0;
-    }
+
 
     public static void lerMedico() {
         try{

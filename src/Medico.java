@@ -28,8 +28,8 @@ public class Medico {
         public Medico(String info){
             String[] partes= info.split(";");
             this.nome = partes[0];
-            this.idade = Long.parseLong(partes[1]);
-            this.cpf = partes[2];
+            this.idade = Long.parseLong(partes[2]);
+            this.cpf = partes[1];
             this.telefone = partes[3];
             this.dinheiro = Long.parseLong(partes[4]);
             this.especializacao = partes[5];

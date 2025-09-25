@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Paciente{
         String nome;
         int idade;
@@ -14,24 +16,24 @@ public class Paciente{
             this.telefone = "";
             this.dinheiro = "";
             this.planoSaude = "";
-        }
-              public void Paciente(String nome, int idade, String cpf, String telefone, String dinheiro, String planoSaude ){
+    }
+    public void Paciente(String nome, int idade, String cpf, String telefone, String dinheiro, String planoSaude ){
             this.nome = nome;
             this.idade = idade;
             this.cpf = cpf;
             this.telefone = telefone;
             this.dinheiro = dinheiro;
             this.planoSaude = planoSaude;
-        }
+    }
 
-        public Paciente(String info){
+    public Paciente(String info){
                 String[] partes= info.split(";");
                 this.nome = partes[0];
                 this.cpf = partes[1];
                 this.idade = Integer.parseInt(partes[2]);
                 this.telefone = partes[3];
-                this.dinheiro = partes[4];
-                this.planoSaude = partes[5];
+                this.dinheiro = partes[5];
+                this.planoSaude = partes[4];
         }
 
         public int plano(String info){
@@ -56,7 +58,19 @@ public class Paciente{
                 return 0;
             }
         }
-
+        public boolean compCpf(String cpf,ArrayList<String> lista){
+            for (String s : lista) {
+                String[] partes = s.split(";");
+                if (partes[1].trim().equals(cpf)) {
+                    return true;
+                }
+            }
+        return false;
+    }
+        public String pegaCpf(String info){
+        String[] partes = info.split(";");
+        return partes[1];
+        }
 
 
         public void setNome(String nome){
