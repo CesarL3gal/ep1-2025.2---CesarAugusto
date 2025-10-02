@@ -8,7 +8,7 @@ public class Main {
         char entrada = '0';
         ArrayList<String> listaPaciente = new ArrayList<String>();
         ArrayList<String> listaMedico = new ArrayList<>();
-        ArrayList<String> listaConsulta = new ArrayList<String>();
+        ArrayList<String> listaConsulta = new ArrayList<>();
         listaPaciente = CSV.relerPaciente();
         while(!(entrada == 'X')) {
 
@@ -24,7 +24,6 @@ public class Main {
             if(entrada<='6') {
                 switch (entrada) {
                     case '1' -> {     //Area dos Médicos
-
                         char entrada2 = '0';
                         while (!(entrada2 == 'V')) {
                             System.out.println("==========================");
@@ -89,7 +88,18 @@ public class Main {
                                 }
                                 case '3' ->{ //3: Pesquisar Paciente
                                     System.out.println("Escreva o CPF do Paciente");
-                                    Tester.lerArrayList(listaPaciente);
+                                    String cpf = scan.nextLine();
+                                    Paciente paciente = new Paciente();
+                                    listaPaciente=CSV.relerPaciente();
+                                    if(paciente.compCpf(cpf, listaPaciente)) {
+                                        String info = paciente.encontrarPessoa(cpf, listaPaciente);
+                                        paciente.setAll(info);
+                                        System.out.println("Pessoa registrada:");
+                                        paciente.getInfo();
+                                    }
+                                    else{
+                                        System.out.println("CPF não encontrado");
+                                    }
                                 }
                                 case '4' ->{ //4: Ver histórico de consultas de um paciente
                                     System.out.println("Escreva o CPF do Paciente");

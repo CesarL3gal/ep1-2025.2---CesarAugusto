@@ -7,7 +7,6 @@ public class Paciente{
         String telefone;
         String dinheiro;
         String planoSaude;
-        ArrayList<String> Consultas = new ArrayList<>();
 
 
     public Paciente(){
@@ -71,7 +70,6 @@ public class Paciente{
         String[] partes = info.split(";");
         return partes[1];
     }
-
     //Ordem do CSV Consulta : Paciente; CPF do Paciente; Medico; CPF do Medico; Data; Hora; Motivo
     public ArrayList<String> getConsultas(String cpf){
         ArrayList<String> consultasTotais = CSV.relerConsulta();
@@ -84,8 +82,25 @@ public class Paciente{
         }
         return consultas;
     }
+    public String encontrarPessoa(String cpf, ArrayList<String> lista){
+        for (String s : lista) {
+            String[] partes = s.split(";");
+            if (partes[1].trim().equals(cpf)) {
+                return s;
+            }
+        }
+        return "Não encontrado";
+    }
 
-
+        public void setAll(String info){
+            String[] partes= info.split(";");
+            this.nome = partes[0];
+            this.cpf = partes[1];
+            this.idade = Integer.parseInt(partes[2]);
+            this.telefone = partes[3];
+            this.dinheiro = partes[5];
+            this.planoSaude = partes[4];
+        }
 
 
         public void setNome(String nome){
