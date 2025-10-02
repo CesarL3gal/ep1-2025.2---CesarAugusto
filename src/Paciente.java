@@ -7,7 +7,7 @@ public class Paciente extends Pessoa{
 //        String cpf;
 //        String telefone;
 //        String dinheiro;
-    super(nome,idade,cpf,telefone,dinheiro);
+    //super(nome,idade,cpf,telefone,dinheiro);
         String planoSaude;
         List<Consultas> consultasList= new ArrayList<>();
 
@@ -19,7 +19,8 @@ public class Paciente extends Pessoa{
 //            this.dinheiro = "";
             this.planoSaude = "";
     }
-    public Paciente(String nome, int idade, String cpf, String telefone, String dinheiro, String planoSaude ){
+    public Paciente(String nome, int idade, String cpf, String telefone, long dinheiro, String planoSaude ){
+        super(nome,idade,cpf,telefone,dinheiro);
 //            this.nome = nome;
 //            this.idade = idade;
 //            this.cpf = cpf;
@@ -150,10 +151,10 @@ public class Paciente extends Pessoa{
     }
         public void getInfo(){
             System.out.println("==========================");
-            System.out.println("Nome : " + getNome());
-            System.out.println("Idade : " + getIdade());
-            System.out.println("CPF : " + getCpf());
-            System.out.println("Telefone : "+getTelefone());
+//            System.out.println("Nome : " + getNome());
+//            System.out.println("Idade : " + getIdade());
+//            System.out.println("CPF : " + getCpf());
+//            System.out.println("Telefone : "+getTelefone());
             System.out.println("==========================");
         }
 }
