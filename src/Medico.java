@@ -1,4 +1,4 @@
-public class Medico {
+public class Medico extends Pessoa {
     String nome;
     long idade;
     String cpf;

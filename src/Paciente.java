@@ -1,38 +1,40 @@
 import java.util.ArrayList;
+import java.util.List;
 
-public class Paciente{
-        String nome;
-        int idade;
-        String cpf;
-        String telefone;
-        String dinheiro;
+public class Paciente extends Pessoa{
+//        String nome;
+//        int idade;
+//        String cpf;
+//        String telefone;
+//        String dinheiro;
+    super(nome,idade,cpf,telefone,dinheiro);
         String planoSaude;
-
+        List<Consultas> consultasList= new ArrayList<>();
 
     public Paciente(){
-            this.nome = "";
-            this.idade = 0;
-            this.cpf = "";
-            this.telefone = "";
-            this.dinheiro = "";
+//            this.nome = "";
+//            this.idade = 0;
+//            this.cpf = "";
+//            this.telefone = "";
+//            this.dinheiro = "";
             this.planoSaude = "";
     }
     public Paciente(String nome, int idade, String cpf, String telefone, String dinheiro, String planoSaude ){
-            this.nome = nome;
-            this.idade = idade;
-            this.cpf = cpf;
-            this.telefone = telefone;
-            this.dinheiro = dinheiro;
+//            this.nome = nome;
+//            this.idade = idade;
+//            this.cpf = cpf;
+//            this.telefone = telefone;
+//            this.dinheiro = dinheiro;
             this.planoSaude = planoSaude;
     }
 
     public Paciente(String info){
                 String[] partes= info.split(";");
-                this.nome = partes[0];
-                this.cpf = partes[1];
-                this.idade = Integer.parseInt(partes[2]);
-                this.telefone = partes[3];
-                this.dinheiro = partes[5];
+//                this.nome = partes[0];
+//                this.cpf = partes[1];
+//                this.idade = Integer.parseInt(partes[2]);
+//                this.telefone = partes[3];
+//                this.dinheiro = partes[5];
                 this.planoSaude = partes[4];
     }
     public int plano(String info){
@@ -94,46 +96,58 @@ public class Paciente{
 
         public void setAll(String info){
             String[] partes= info.split(";");
-            this.nome = partes[0];
-            this.cpf = partes[1];
-            this.idade = Integer.parseInt(partes[2]);
-            this.telefone = partes[3];
-            this.dinheiro = partes[5];
+//            this.nome = partes[0];
+//            this.cpf = partes[1];
+//            this.idade = Integer.parseInt(partes[2]);
+//            this.telefone = partes[3];
+//            this.dinheiro = partes[5];
             this.planoSaude = partes[4];
         }
 
 
-        public void setNome(String nome){
-            this.nome=nome;
-        }
-        public void setTelefone(String telefone){
-            this.telefone=telefone;
-        }
-        public void setCpf(String cpf) {
-            this.cpf = cpf;
-        }
-        public void setIdade(int idade) {
-            this.idade = idade;
-        }
-        public void setDinheiro(String dinheiro){
-            this.dinheiro=dinheiro;
-        }
+//        public void setNome(String nome){
+//            this.nome=nome;
+//        }
+//        public void setTelefone(String telefone){
+//            this.telefone=telefone;
+//        }
+//        public void setCpf(String cpf) {
+//            this.cpf = cpf;
+//        }
+//        public void setIdade(int idade) {
+//            this.idade = idade;
+//        }
+//        public void setDinheiro(String dinheiro){
+//            this.dinheiro=dinheiro;
+//        }
+    public void setPlanoSaude(String planoSaude){
+        this.planoSaude=planoSaude;
+    }
+    public void setConsultasList(List<Consultas> consultasList){
+        this.consultasList=consultasList;
+    }
 
-        public int getIdade(){
-            return idade;
-        }
-        public String getCpf() {
-            return cpf;
-        }
-        public String getDinheiro(){
-            return dinheiro;
-        }
-        public String getNome(){
-            return nome;
-        }
-        public String getTelefone(){
-            return telefone;
-        }
+//        public int getIdade(){
+//            return idade;
+//        }
+//        public String getCpf() {
+//            return cpf;
+//        }
+//        public String getDinheiro(){
+//            return dinheiro;
+//        }
+//        public String getNome(){
+//            return nome;
+//        }
+//        public String getTelefone(){
+//            return telefone;
+//        }
+    public String getPlanoSaude(){
+        return this.planoSaude;
+    }
+    public List<Consultas> getConsultasList(){
+        return this.consultasList;
+    }
         public void getInfo(){
             System.out.println("==========================");
             System.out.println("Nome : " + getNome());
