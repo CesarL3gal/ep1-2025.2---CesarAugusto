@@ -8,7 +8,7 @@ public class Paciente{
     String planoSaude;
     List<Consultas> consultasList= new ArrayList<>();
     List<Internacao> internacaoList = new ArrayList<>();
-
+    //teste
     //Construtores
     public Paciente(){
             this.nome = "";

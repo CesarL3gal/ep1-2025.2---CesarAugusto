@@ -10,7 +10,7 @@ public class CSV {
 
     //Area das Escritas
 
-
+    //teste
     public static void CSV_Paciente(Paciente Paciente) {
 
         try (FileWriter CSV = new FileWriter("Pacientes.csv", true)) {

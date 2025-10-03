@@ -9,6 +9,7 @@ public class Internacao {
     private double custoTotal;
     private int quarto;
 
+
     public Internacao(Paciente paciente, Medico medico, LocalDate entrada, LocalDate Saida, double custo, int quarto){
         this.paciente=paciente;
         this.medico=medico;
@@ -34,5 +35,5 @@ public class Internacao {
            System.err.println("Erro na formatação do CSV");
        }
     }
-
+//teste
 }

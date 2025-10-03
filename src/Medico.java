@@ -13,6 +13,7 @@ public class Medico {
             this.crm=null;
             this.especializacao= "";
         }
+    //teste
         public void Medico(String nome, long idade, String cpf,String crm, String especializacao ){
             this.nome = nome;
             this.idade = idade;

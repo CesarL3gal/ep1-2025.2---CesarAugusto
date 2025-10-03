@@ -87,6 +87,7 @@ public class Main {
                                 case '2' -> { //2: Ver Pacientes Cadastrados :
                                     CSV.lerPaciente();
                                 }
+
                                 case '3' ->{ //3: Pesquisar Paciente
                                     System.out.println("Escreva o CPF do Paciente");
                                     String cpf = scan.nextLine();
