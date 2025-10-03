@@ -1,41 +1,40 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+
 public class Consultas {
-    String paciente;
+    String nomePaciente;
     String pacienteCpf;
-    String medico;
-    String medicoCpf;
-    String data;
-    String hora;
+    String nomeMedico;
+    String medicoCrm;
+    LocalDateTime data;
     String motivo;
 
-    public Consultas(String paciente,String pacienteCpf, String medico,String medicoCpf, String data, String hora, String motivo){
-        this.paciente = paciente;
+    public Consultas(String paciente,String pacienteCpf, String medico,String medicoCrm, LocalDateTime data, String motivo){
+        this.nomePaciente = paciente;
         this.pacienteCpf = pacienteCpf;
-        this.medico = medico;
-        this.medicoCpf = medicoCpf;
+        this.nomeMedico = medico;
+        this.medicoCrm = medicoCrm;
         this.data = data;
-        this.hora = hora;
         this.motivo = motivo;
     }
 
     public Consultas(String info){
         String[] partes= info.split(";");
-        this.paciente = partes[0];
+        this.nomePaciente = partes[0];
         this.pacienteCpf = partes[1];
-        this.medico = partes[2];
-        this.medicoCpf = partes[3];
-        this.data = partes[4];
-        this.hora = partes[5];
+        this.nomeMedico = partes[2];
+        this.medicoCrm = partes[3];
+        this.data = LocalDateTime.parse(partes[4]);
         this.motivo = partes[6];
     }
 
     //Compara CPF com todos os termos do Array List
-    //Ordem do CSV : Paciente; CPF do Paciente; Medico; CPF do Medico; Data; Hora; Motivo
+    //Ordem do CSV: Paciente; CPF do Paciente; Medico; CRM do Medico; Data; Hora; Motivo
     public boolean compCpf(String cpf, ArrayList<String> lista){
         for (String s : lista) {
             String[] partes = s.split(";");
-            if (partes[1].trim().equals(cpf)) {
+            if (partes[1].trim().equals(cpf.trim())) {
                 return true;
             }
         }
@@ -52,26 +51,27 @@ public class Consultas {
 
 
     public String getPaciente(){
-        return paciente;
+        return nomePaciente;
     }
     public String getMedico() {
-        return medico;
-    }
-    public String getHora() {
-        return hora;
+        return nomeMedico;
     }
     public String getMotivo() {
         return motivo;
     }
-    public String getData() {
+    public LocalDateTime getData() {
         return data;
     }
+    public String getPacienteCpf(){return pacienteCpf;}
+    public String getMedicoCrm(){return medicoCrm;}
+
+
+
     public void getInfo(){
         System.out.println("==========================");
         System.out.println("Paciente : " + getPaciente());
         System.out.println("Medico : " + getMedico());
         System.out.println("Data : " + getData());
-        System.out.println("Hora : " + getHora());
         System.out.println("Motivo : " + getMotivo());
         System.out.println("==========================");
     }

@@ -15,8 +15,7 @@ public class CSV {
 
         try (FileWriter CSV = new FileWriter("Pacientes.csv", true)) {
 
-            CSV.write(Paciente.nome + ";" + Paciente.cpf + ";" + Paciente.idade + ";" + Paciente.telefone + ";" + Paciente.planoSaude + ";" +
-                    Paciente.dinheiro + "\n");
+            CSV.write(Paciente.nome + ";" + Paciente.cpf + ";" + Paciente.idade + ";" + Paciente.planoSaude + ";" + "\n");
         } catch (IOException erro) {
             System.out.println("Erro ao Cadastrar Paciente!");
         }
@@ -27,7 +26,7 @@ public class CSV {
 
         try (FileWriter CSV = new FileWriter("Medicos.csv", true)) {
 
-            CSV.write(Medico.nome + ";" + Medico.cpf + ";" + Medico.idade + ";" + Medico.telefone + ";" + Medico.dinheiro + ";" + Medico.especializacao + ";" + Medico.preco + "\n");
+            CSV.write(Medico.nome + ";" + Medico.cpf + ";" + Medico.idade +  ";" + Medico.especializacao + ";" + "\n");
 
         } catch (IOException erro) {
 
@@ -41,13 +40,21 @@ public class CSV {
 
         try (FileWriter CSV = new FileWriter("Consultas.csv", true)) {
 
-            CSV.write(Consultas.paciente + ";" + Consultas.pacienteCpf + ";" + Consultas.medico + ";" + Consultas.medicoCpf + ";" + Consultas.data + ";" + Consultas.hora +
-                    ";" + Consultas.motivo + "\n");
+            CSV.write(Consultas.nomePaciente + ";" + Consultas.pacienteCpf + ";" + Consultas.nomeMedico + ";" + Consultas.medicoCrm + ";" + Consultas.data + ";" + Consultas.motivo + "\n");
 
         } catch (IOException erro) {
 
             System.out.println("Erro ao Cadastrar Consulta!");
 
+        }
+    }
+
+    public static void CSV_Internacao(Internacao Internacao){
+        try (FileWriter CSV = new FileWriter("Internação.csv", true)){
+            CSV.write(  ";"  );
+        }
+        catch (IOException erro) {
+            System.out.println("Erro ao Cadastrar Internação!");
         }
     }
 
