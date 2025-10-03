@@ -4,20 +4,22 @@ import java.util.List;
 import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
+//        Menu menu = new Menu();
+//        menu.menuGeral();
+
         Scanner scan = new Scanner(System.in);
         char entrada = '0';
-        ArrayList<String> listaPaciente = new ArrayList<String>();
+        ArrayList<String> listaPaciente = new ArrayList<>();
         ArrayList<String> listaMedico = new ArrayList<>();
         ArrayList<String> listaConsulta = new ArrayList<>();
-        listaPaciente = CSV.relerPaciente();
         while(!(entrada == 'X')) {
 
-        System.out.println("==========================");
-        System.out.println("1:Medicos");
-        System.out.println("2:Pacientes");
-        System.out.println("3:Consultas");
-        System.out.println("X:para sair");
-        System.out.println("==========================");
+            System.out.println("==========================");
+            System.out.println("1:Medicos");
+            System.out.println("2:Pacientes");
+            System.out.println("3:Consultas");
+            System.out.println("X:para sair");
+            System.out.println("==========================");
             entrada = scan.next().toUpperCase().charAt(0);
             scan.nextLine();
 
@@ -57,6 +59,7 @@ public class Main {
                     case '2' -> {    //Area dos Pacientes
                         char entrada2 = '0';
                         while (!(entrada2 == 'V')) {
+                            listaPaciente=CSV.relerPaciente();
                             System.out.println("==========================");
                             System.out.println("1: Cadastrar Pacientes");
                             System.out.println("2: Ver Pacientes Cadastrados :");
@@ -72,20 +75,19 @@ public class Main {
                                     System.out.println("Escreva na ordem Nome;Cpf;Idade;Telefone;PlanoSaude;Dinheiro");
                                     String info = scan.nextLine();
                                     Paciente paciente = new Paciente(info);
-                                    listaPaciente=CSV.relerPaciente();
-                                    if(!paciente.compCpf(paciente.pegaCpf(info), listaPaciente)) {
+                                    if(!paciente.compCpf(paciente.getCpf(), listaPaciente)) {
                                         CSV.CSV_Paciente(paciente);
                                         System.out.println("Pessoa registrada:");
                                         paciente.getInfo();
                                     }
                                     else{
-                                        System.out.println("CPF já encontrado");
                                         System.out.println("Não foi possível registrar");
                                     }
                                 }
                                 case '2' -> { //2: Ver Pacientes Cadastrados :
                                     CSV.lerPaciente();
                                 }
+
                                 case '3' ->{ //3: Pesquisar Paciente
                                     System.out.println("Escreva o CPF do Paciente");
                                     String cpf = scan.nextLine();
@@ -94,7 +96,7 @@ public class Main {
                                     if(paciente.compCpf(cpf, listaPaciente)) {
                                         String info = paciente.encontrarPessoa(cpf, listaPaciente);
                                         paciente.setAll(info);
-                                        System.out.println("Pessoa registrada:");
+                                        System.out.println("Pessoa encontrada:");
                                         paciente.getInfo();
                                     }
                                     else{
@@ -173,5 +175,6 @@ public class Main {
         }
         System.out.println("Saindo...");
         scan.close();
+
     }
 }
