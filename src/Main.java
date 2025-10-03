@@ -94,8 +94,8 @@ public class Main {
                                     Paciente paciente = new Paciente();
                                     listaPaciente=CSV.relerPaciente();
                                     if(paciente.compCpf(cpf, listaPaciente)) {
-                                        String info = paciente.encontrarPessoa(cpf, listaPaciente);
-                                        paciente.setAll(info);
+                                        Paciente pessoa = new Paciente();
+                                        pessoa = Paciente.encontrarPaciente(cpf, listaPaciente);
                                         System.out.println("Pessoa encontrada:");
                                         paciente.getInfo();
                                     }
@@ -107,12 +107,11 @@ public class Main {
                                     System.out.println("Escreva o CPF do Paciente");
                                     String cpf = scan.nextLine();
                                     Paciente paciente = new Paciente();
-                                    ArrayList<String> consultaPaciente = new ArrayList<>();
+                                    ArrayList<Consultas> consultaPaciente = new ArrayList<>();
                                     consultaPaciente = paciente.getConsultas(cpf);
                                     if(paciente.compCpf(cpf, consultaPaciente)) {
-                                        for (String s : consultaPaciente) {
-                                            String[] partes = s.split(";");
-                                            System.out.println("Paciente: " + partes[0] + ", Médico: " + partes[2] + ", Data: " + partes[4] + ", Hora: " + partes[5] + ", Motivo: " + partes[6]);
+                                        for (Consultas s : consultaPaciente) {
+                                            System.out.println("Paciente: " + get. + ", Médico: " + partes[2] + ", Data: " + partes[4] + ", Hora: " + partes[5] + ", Motivo: " + partes[6]);
                                         }
                                     }
                                     else{

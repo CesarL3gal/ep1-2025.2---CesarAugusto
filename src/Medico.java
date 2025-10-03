@@ -30,7 +30,7 @@ public class Medico {
             this.crm=partes[3];
             this.especializacao = partes[4];
         }
-    public Medico encontrarMedico(String cpf, ArrayList<Medico> lista){
+    public static Medico encontrarMedico(String cpf, ArrayList<Medico> lista){
         for (Medico s : lista) {
             if (s.getCpf().trim().equals(cpf)) {
                 return s;

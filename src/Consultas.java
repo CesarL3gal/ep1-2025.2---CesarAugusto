@@ -34,10 +34,9 @@ public class Consultas {
             String[] partes= info.split(";");
             String cpf=partes[0].trim();
             String crm=partes[1].trim();
-            Func funcao= new Func();
 
-            this.paciente=funcao.encontrarPaciente(cpf,listaPaciente);
-            this.medico=funcao.encontrarMedico(crm,listaMedicos);
+            this.paciente=Paciente.encontrarPaciente(cpf,listaPaciente);
+            this.medico=Medico.encontrarMedico(crm,listaMedicos);
             this.data = LocalDateTime.parse(partes[2]);
             this.motivo = partes[3];
         }
