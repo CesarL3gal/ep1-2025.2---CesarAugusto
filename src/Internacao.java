@@ -35,5 +35,4 @@ public class Internacao {
            System.err.println("Erro na formatação do CSV");
        }
     }
-//teste
 }

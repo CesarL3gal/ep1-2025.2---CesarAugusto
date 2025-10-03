@@ -1,32 +1,52 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 
 public class Consultas {
-    String nomePaciente;
-    String pacienteCpf;
-    String nomeMedico;
-    String medicoCrm;
+    Paciente paciente;
+    Medico medico;
     LocalDateTime data;
     String motivo;
 
-    public Consultas(String paciente,String pacienteCpf, String medico,String medicoCrm, LocalDateTime data, String motivo){
-        this.nomePaciente = paciente;
-        this.pacienteCpf = pacienteCpf;
-        this.nomeMedico = medico;
-        this.medicoCrm = medicoCrm;
+    public Consultas(Paciente paciente,Medico medico, LocalDateTime data, String motivo){
+        this.paciente = paciente;
+        this.medico = medico;
         this.data = data;
         this.motivo = motivo;
     }
 
-    public Consultas(String info){
+    public Consultas(String info, Paciente paciente, Medico medico){
         String[] partes= info.split(";");
-        this.nomePaciente = partes[0];
-        this.pacienteCpf = partes[1];
-        this.nomeMedico = partes[2];
-        this.medicoCrm = partes[3];
-        this.data = LocalDateTime.parse(partes[4]);
-        this.motivo = partes[6];
+        try {
+            this.paciente = paciente;
+            this.medico = medico;
+            this.data = LocalDateTime.parse(partes[2]);
+            this.motivo = partes[3];
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.err.println("Formatação Errada");
+        }
+    }
+
+    public Consultas(String info, ArrayList<Paciente> listaPaciente, ArrayList<Medico> listaMedicos){
+        try {
+            String[] partes= info.split(";");
+            String cpf=partes[0].trim();
+            String crm=partes[1].trim();
+            Func funcao= new Func();
+
+            this.paciente=funcao.encontrarPaciente(cpf,listaPaciente);
+            this.medico=funcao.encontrarMedico(crm,listaMedicos);
+            this.data = LocalDateTime.parse(partes[2]);
+            this.motivo = partes[3];
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.err.println("Formatação Errada");
+        }
+        catch (DateTimeParseException e){
+            System.err.println("Erro na formatação da data");
+        }
     }
 
     //Compara CPF com todos os termos do Array List
@@ -50,11 +70,11 @@ public class Consultas {
     }
 
 
-    public String getPaciente(){
-        return nomePaciente;
+    public Paciente getPaciente(){
+        return paciente;
     }
-    public String getMedico() {
-        return nomeMedico;
+    public Medico getMedico() {
+        return medico;
     }
     public String getMotivo() {
         return motivo;
@@ -62,15 +82,15 @@ public class Consultas {
     public LocalDateTime getData() {
         return data;
     }
-    public String getPacienteCpf(){return pacienteCpf;}
-    public String getMedicoCrm(){return medicoCrm;}
+    public String getPacienteCpf(){return paciente.getCpf();}
+    public String getMedicoCrm(){return medico.getCrm();}
 
 
 
     public void getInfo(){
         System.out.println("==========================");
-        System.out.println("Paciente : " + getPaciente());
-        System.out.println("Medico : " + getMedico());
+        System.out.println("Paciente : " + getPaciente().getNome());
+        System.out.println("Medico : " + getMedico().getNome());
         System.out.println("Data : " + getData());
         System.out.println("Motivo : " + getMotivo());
         System.out.println("==========================");

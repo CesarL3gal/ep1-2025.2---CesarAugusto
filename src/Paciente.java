@@ -62,11 +62,10 @@ public class Paciente{
         }
 
 
-    public boolean compCpf(String cpf,ArrayList<String> lista){
+    public boolean compCpf(String cpf,ArrayList<Paciente> lista){
         try {
-            for (String s : lista) {
-                String[] partes = s.split(";");
-                if (partes[1].trim().equals(cpf)) {
+            for (Paciente s : lista) {
+                if (s.getCpf().trim().equals(cpf)) {
                     return true;
                 }
             }
@@ -83,20 +82,19 @@ public class Paciente{
 
 
 
-    //Ordem do CSV Consulta : Paciente; CPF do Paciente; Medico; CPF do Medico; Data; Hora; Motivo
-    public ArrayList<String> getConsultas(String cpf){
-        ArrayList<String> consultasTotais = CSV.relerConsulta();
-        ArrayList<String> consultas = new ArrayList<>();
-        for(String s: consultasTotais){
-            String[] partes = s.split(";");
-            if(partes[1].trim().equals(cpf)){
-                consultas.add(s);
+    //Ordem do CSV Consulta : CPF do Paciente; CPF do Medico; Data; Hora; Motivo
+    public ArrayList<Consultas> getConsultas(String cpf){
+        ArrayList<Consultas> consultasTotais = CSV.relerConsulta();
+        ArrayList<Consultas> consultas = new ArrayList<>();
+        for(Consultas c: consultasTotais){
+            if(c.paciente.getCpf().trim().equals(cpf)){
+                consultas.add(c);
             }
         }
         return consultas;
     }
 
-    public String encontrarPessoa(String cpf, ArrayList<String> lista){
+    public static String encontrarPessoa(String cpf, ArrayList<String> lista){
         for (String s : lista) {
             String[] partes = s.split(";");
             if (partes[1].trim().equals(cpf)) {
@@ -106,7 +104,7 @@ public class Paciente{
         return null;
     }
 
-    public Paciente encontrarPaciente(String cpf, ArrayList<Paciente> lista){
+    public static Paciente encontrarPaciente(String cpf, ArrayList<Paciente> lista){
         for (Paciente s : lista) {
             if (s.getCpf().trim().equals(cpf)) {
                 return s;

@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
-//        Menu menu = new Menu();
-//        menu.menuGeral();
+
 
         Scanner scan = new Scanner(System.in);
         char entrada = '0';
-        ArrayList<String> listaPaciente = new ArrayList<>();
-        ArrayList<String> listaMedico = new ArrayList<>();
-        ArrayList<String> listaConsulta = new ArrayList<>();
+        ArrayList<Paciente> listaPaciente = new ArrayList<>();
+        ArrayList<Medico> listaMedico = new ArrayList<>();
+        ArrayList<Consultas> listaConsulta = new ArrayList<>();
+        ArrayList<Internacao> listaInterancao = new ArrayList<>();
         while(!(entrada == 'X')) {
 
             System.out.println("==========================");
@@ -145,7 +145,7 @@ public class Main {
                                 case '1' -> { // Cadastrar consulas
                                     System.out.println("Escreva Paciente;CPF do Paciente;Medico; CPF do Medico;Data;Hora;Motivo");
                                     String info = scan.nextLine();
-                                    Consultas consulta = new Consultas(info);
+                                    Consultas consulta = new Consultas(info,listaPaciente,listaMedico);
                                     listaConsulta=CSV.relerConsulta();
                                     if(!consulta.compCpf(consulta.pegaCpfMedico(info), listaConsulta)) {
                                         CSV.CSV_Consulta(consulta);
