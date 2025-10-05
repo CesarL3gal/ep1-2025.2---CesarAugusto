@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Medico {
@@ -71,48 +72,34 @@ public class Medico {
 
     public static Medico pegarHistoricoConsulta(Medico medico, ArrayList<Consultas> lista){
        for(Consultas c : lista){
-           if(medico.getCrm().trim().equals(c.getMedico().getCrm().trim())){
+           if(medico!= null && c.getMedico()!= null && medico.getCrm().equals(c.getMedico().getCrm())){
              medico.adcionarConsultaHistorico(c);
            }
        }
        return medico;
     }
 
-
-        public void setNome(String nome){
-            this.nome=nome;
-        }
-        public void setCrm(String crm){this.crm=crm;}
-        public void setCpf(String cpf) {
-            this.cpf = cpf;
-        }
-        public void setIdade(int idade) {
-            this.idade = idade;
-        }
-        public void setEspecializacao(Especialidade especializacao){this.especializacao=especializacao;}
-
-        public int getIdade(){
-            return idade;
-        }
-        public String getCrm(){return crm;}
-        public Especialidade getEspecializacao(){return especializacao;}
-        public String getCpf() {
-            return cpf;
-        }
-        public String getNome(){
-            return nome;
-        }
+    //False - horario não disponivel
+    //True -horario disponivel
+    public static boolean horaDisponivel(Medico medico, LocalDateTime data){
+            for(Consultas consulta : medico.getHistoricoConsulta()){
+                if(data.isBefore(consulta.getData().plusMinutes(30))){
+                    return false;
+                }
+            }
+            return true;
+    }
 
     public void adcionarConsultaHistorico(Consultas consulta){
         this.HistoricoConsulta.add(consulta);
     }
+
     public void setHistoricoConsulta(ArrayList<Consultas> historicoConsulta){
         this.HistoricoConsulta = historicoConsulta;
     }
     public ArrayList<Consultas> getHistoricoConsulta(){
         return this.HistoricoConsulta;
     }
-
         public void getInfo(){
             System.out.println("==========================");
             System.out.println("Nome : " + getNome());
@@ -120,4 +107,28 @@ public class Medico {
             System.out.println("CPF : " + getCpf());
             System.out.println("==========================");
         }
+
+    public void setNome(String nome){
+        this.nome=nome;
     }
+    public void setCrm(String crm){this.crm=crm;}
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+    public void setEspecializacao(Especialidade especializacao){this.especializacao=especializacao;}
+
+    public int getIdade(){
+        return idade;
+    }
+    public String getCrm(){return crm;}
+    public Especialidade getEspecializacao(){return especializacao;}
+    public String getCpf() {
+        return cpf;
+    }
+    public String getNome(){
+        return nome;
+    }
+}

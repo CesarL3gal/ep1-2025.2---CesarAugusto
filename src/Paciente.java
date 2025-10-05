@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Paciente{
     String nome;
@@ -7,8 +6,8 @@ public class Paciente{
     String cpf;
     String planoSaude;
     boolean valido;
-    ArrayList<Consultas> HistoricoConsulta = new ArrayList<>();
-    ArrayList<Internacao> HistoricoInternacao = new ArrayList<>();
+    ArrayList<Consultas> historicoConsulta = new ArrayList<>();
+    ArrayList<Internacao> historicoInternacao = new ArrayList<>();
     //Construtores
     public Paciente(){
             this.nome = "";
@@ -74,7 +73,7 @@ public class Paciente{
 
     public static Paciente pegarHistoricoConsulta(Paciente paciente, ArrayList<Consultas> lista){
         for(Consultas c : lista){
-            if(paciente.getCpf().trim().equals(c.getPaciente().getCpf().trim())){
+            if(paciente != null && c.getPaciente() !=null && paciente.getCpf().trim().equals(c.getPaciente().getCpf().trim())){
                 paciente.adcionarConsultaHistorico(c);
             }
         }
@@ -82,47 +81,24 @@ public class Paciente{
     }
 
     public void adcionarConsultaHistorico(Consultas consulta){
-        this.HistoricoConsulta.add(consulta);
+        this.historicoConsulta.add(consulta);
     }
     public void setHistoricoConsulta(ArrayList<Consultas> historicoConsulta){
-        this.HistoricoConsulta = historicoConsulta;
+        this.historicoConsulta = historicoConsulta;
     }
     public ArrayList<Consultas> getHistoricoConsulta(){
-        return this.HistoricoConsulta;
+        return this.historicoConsulta;
     }
 
     public void adcionarInternacaoHistorico(Internacao internacao){
-        this.HistoricoInternacao.add(internacao);
+        this.historicoInternacao.add(internacao);
     }
     public void setHistoricoInternacao(ArrayList<Internacao> historicoInternacao){
-        this.HistoricoInternacao = historicoInternacao;
+        this.historicoInternacao = historicoInternacao;
     }
     public ArrayList<Internacao> getHistoricoInternacao(){
-        return this.HistoricoInternacao;
+        return this.historicoInternacao;
     }
-
-    public void setNome(String nome){
-        this.nome=nome;
-    }
-    public void setCpf(String cpf) {
-            this.cpf = cpf;
-        }
-    public void setIdade(int idade) {
-            this.idade = idade;
-        }
-
-    public void setPlanoSaude(String planoSaude){
-        this.planoSaude=planoSaude;
-    }
-    public int getIdade(){
-            return idade;
-        }
-    public String getCpf() {
-            return cpf;
-        }
-    public String getNome(){
-            return nome;
-        }
 
     public String getPlanoSaude(){
         return this.planoSaude;
@@ -136,6 +112,32 @@ public class Paciente{
             System.out.println("Plano De Saude : " + getPlanoSaude());
             System.out.println("==========================");
         }
+
+
+
+
+    public void setNome(String nome){
+        this.nome=nome;
+    }
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public void setPlanoSaude(String planoSaude){
+        this.planoSaude=planoSaude;
+    }
+    public int getIdade(){
+        return idade;
+    }
+    public String getCpf() {
+        return cpf;
+    }
+    public String getNome(){
+        return nome;
+    }
 //    }
 //        return consultas;
 //        }

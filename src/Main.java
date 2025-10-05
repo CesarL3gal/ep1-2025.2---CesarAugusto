@@ -7,9 +7,14 @@ public class Main {
         ArrayList<Medico> listaMedico = CSV.relerMedico();
         ArrayList<Consultas> listaConsulta = CSV.relerConsulta(listaPaciente, listaMedico);
         //ArrayList<Internacao> listaInterancao = CSV.relerInternacao(listaPaciente, listaMedico);
+        for(Paciente p : listaPaciente){
+            Paciente.pegarHistoricoConsulta(p,listaConsulta);
+        }
+        for(Medico m : listaMedico){
+            Medico.pegarHistoricoConsulta(m,listaConsulta);
+        }
         Scanner scan = new Scanner(System.in);
         char entrada = '0';
-
 
         while(!(entrada == 'X')) {
             System.out.println("==========================");
@@ -56,9 +61,13 @@ public class Main {
                                     for(Medico medico : listaMedico){
                                         int numero = listaMedico.indexOf(medico) + 1;
                                         System.out.println("Numero do Paciente : " + numero);
-                                        System.out.println("Nome : " + medico.getNome() + " CPF : " + medico.getCpf() + " CRM : " + medico.getCrm());
-                                        System.out.println("Idade : " + medico.getIdade() + " Especialização : " + medico.getEspecializacao());
-                                        System.out.println();
+                                        try {
+                                            System.out.println("Nome : " + medico.getNome() + " CPF : " + medico.getCpf() + " CRM : " + medico.getCrm());
+                                            System.out.println("Idade : " + medico.getIdade() + " Especialização : " + medico.getEspecializacao());
+                                            System.out.println();
+                                        } catch (Exception e) {
+                                            System.err.println("Erro na leitura do médico");
+                                        }
                                     }
                                 }
 
@@ -188,25 +197,19 @@ public class Main {
                                     System.out.println("Escreva o Crm do Médico");
                                     String Crm = scan.nextLine();
                                     //Cria um médico
-                                    Medico medico = Medico.encontrarMedicoPorCrm(Crm.trim(),listaMedico);
-                                    if(medico == null){
+                                    Medico temp = Medico.encontrarMedicoPorCrm(Crm.trim(),listaMedico);
+                                    if(temp == null){
                                         System.out.println("Medico não encontrado");
                                         System.out.println("Saindo do Cadastro");
                                         break;
                                     }
-                                    Medico.pegarHistoricoConsulta(medico,listaConsulta);
+                                    Medico medico = Medico.pegarHistoricoConsulta(temp,listaConsulta);
                                     System.out.println("Escreva a data e hora da consulta no formato Ano-Mes-DiaTHH:MM: ");
                                     String data = scan.nextLine();
                                     boolean horarioDisponivel = true;
                                     try {
                                         LocalDateTime Datafinal = LocalDateTime.parse(data.trim());
-                                        for(Consultas c : medico.getHistoricoConsulta()) {
-                                            if (Datafinal.equals(c.getData())){
-                                                System.out.println("Medico já tem consulta marcada no mesmo horario");
-                                                horarioDisponivel=false;
-                                                break;
-                                            }
-                                        }
+                                        horarioDisponivel = Medico.horaDisponivel(medico,Datafinal);
                                     }
                                     catch (Exception e){
                                         System.err.println("Formato Incorreto da Data");
@@ -233,11 +236,15 @@ public class Main {
                                 case '2' ->{//Ver todas as consultas
                                     listaConsulta =CSV.relerConsulta(listaPaciente,listaMedico);
                                     for(Consultas consulta : listaConsulta){
-                                        int numero = listaConsulta.indexOf(consulta) + 1;
-                                        System.out.println("Numero da Consulta : " + numero);
-                                        System.out.println("Paciente : " + consulta.getPaciente().getNome() +" Medico : " + consulta.getMedico().getNome());
-                                        System.out.println("Data : " + consulta.getData() + " Motivo : " + consulta.getMotivo());
-                                        System.out.println();
+                                        try {
+                                            int numero = listaConsulta.indexOf(consulta) + 1;
+                                            System.out.println("Numero da Consulta : " + numero);
+                                            System.out.println("Paciente : " + consulta.getPaciente().getNome() + " Medico : " + consulta.getMedico().getNome());
+                                            System.out.println("Data : " + consulta.getData() + " Motivo : " + consulta.getMotivo());
+                                            System.out.println();
+                                        } catch (Exception e) {
+                                            System.err.println("Erro em ler a consulta");
+                                        }
                                     }
                                 }
 
