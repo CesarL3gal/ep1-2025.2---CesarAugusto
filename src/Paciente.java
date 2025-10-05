@@ -1,23 +1,23 @@
 import java.util.ArrayList;
 
 public class Paciente{
-    String nome;
-    int idade;
-    String cpf;
-    String planoSaude;
-    boolean valido;
-    ArrayList<Consultas> historicoConsulta = new ArrayList<>();
-    ArrayList<Internacao> historicoInternacao = new ArrayList<>();
+    private String nome;
+    private int idade;
+    private String cpf;
+    private PlanoDeSaude planoSaude;
+    private boolean valido;
+    private ArrayList<Consultas> historicoConsulta = new ArrayList<>();
+    private ArrayList<Internacao> historicoInternacao = new ArrayList<>();
     //Construtores
     public Paciente(){
             this.nome = "";
             this.idade = 0;
             this.cpf = "";
-            this.planoSaude = "";
+            this.planoSaude = PlanoDeSaude.NENHUM;
             this.valido=false;
     }
 
-    public Paciente(String nome, int idade, String cpf,  String planoSaude ){
+    public Paciente(String nome, int idade, String cpf,  PlanoDeSaude planoSaude ){
             this.nome = nome;
             this.idade = idade;
             this.cpf = cpf;
@@ -35,7 +35,7 @@ public class Paciente{
             this.nome = partes[0];
             this.cpf = partes[1].trim();
             this.idade = Integer.parseInt(partes[2].trim());
-            this.planoSaude = partes[3].trim();
+            this.planoSaude = PlanoDeSaude.valueOf(partes[3].trim().toUpperCase());
             this.valido = true;
         }
         catch (Exception e){
@@ -45,7 +45,7 @@ public class Paciente{
             this.nome="INVALIDO";
             this.cpf="";
             this.idade=0;
-            this.planoSaude="";
+            this.planoSaude=PlanoDeSaude.NENHUM;
         }
     }
 
@@ -100,7 +100,7 @@ public class Paciente{
         return this.historicoInternacao;
     }
 
-    public String getPlanoSaude(){
+    public PlanoDeSaude getPlanoSaude(){
         return this.planoSaude;
     }
 
@@ -125,8 +125,11 @@ public class Paciente{
     public void setIdade(int idade) {
         this.idade = idade;
     }
+    public void setValido(boolean valido) {
+        this.valido = valido;
+    }
 
-    public void setPlanoSaude(String planoSaude){
+    public void setPlanoSaude(PlanoDeSaude planoSaude){
         this.planoSaude=planoSaude;
     }
     public int getIdade(){
@@ -137,6 +140,9 @@ public class Paciente{
     }
     public String getNome(){
         return nome;
+    }
+    public boolean getValido(){
+        return this.valido;
     }
 //    }
 //        return consultas;

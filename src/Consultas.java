@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 
 public class Consultas {
-    Paciente paciente;
-    Medico medico;
-    LocalDateTime data;
-    String motivo;
+   private Paciente paciente;
+   private Medico medico;
+   private LocalDateTime data;
+   private String motivo;
 
     public Consultas(Paciente paciente,Medico medico, LocalDateTime data, String motivo){
         this.paciente = paciente;
@@ -71,7 +71,14 @@ public class Consultas {
 //        String[] partes = info.split(";");
 //        return partes[3];
 //    }
-
+    public double getCustoFinal(){
+        if(medico == null || paciente == null){
+            return 0.0;
+        }
+        double custo = medico.getCustoConsulta();
+        double desconto = paciente.getPlanoSaude().getDesconto();
+        return custo * (1 - desconto);
+    }
 
     public Paciente getPaciente(){
         return paciente;
@@ -92,10 +99,11 @@ public class Consultas {
 
     public void getInfo(){
         System.out.println("==========================");
-        System.out.println("Paciente : " + getPaciente().getNome());
+        System.out.println("Paciente : " + getPaciente().getNome() + "Plano : " + getPaciente().getPlanoSaude());
         System.out.println("Medico : " + getMedico().getNome());
         System.out.println("Data : " + getData());
         System.out.println("Motivo : " + getMotivo());
+        System.out.println("Custo com desconto : " + getCustoFinal());
         System.out.println("==========================");
     }
 }

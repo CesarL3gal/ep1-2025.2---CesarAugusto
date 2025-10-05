@@ -2,32 +2,34 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Medico {
-    String nome;
-    int idade;
-    String cpf;
-    String crm;
-    Especialidade especializacao;
-    double custoConsulta;
-    boolean valido;
-    ArrayList<Consultas> HistoricoConsulta = new ArrayList<>();
+    private String nome;
+    private int idade;
+    private String cpf;
+    private String crm;
+    private Especialidade especializacao;
+    private double custoConsulta;
+    private boolean valido;
+    private ArrayList<Consultas> HistoricoConsulta = new ArrayList<>();
 
         //Construtores
         public Medico(){
             this.nome = "";
             this.idade = 0;
             this.cpf = "";
-            this.crm= "";
-            this.especializacao= null;
-            this.valido=false;
+            this.crm = "";
+            this.especializacao = null;
+            this.custoConsulta = 0.0;
+            this.valido = false;
         }
 
-        public Medico(String nome, int idade, String cpf,String crm, Especialidade especializacao ){
+        public Medico(String nome, int idade, String cpf,String crm, Especialidade especializacao, double custoConsulta ){
             this.nome = nome;
             this.idade = idade;
             this.cpf = cpf;
-            this.crm=crm;
+            this.crm = crm;
             this.especializacao = especializacao;
-            this.valido=true;
+            this.custoConsulta = custoConsulta;
+            this.valido = true;
         }
 
         //Formato Médico Nome,Idade,CPF,CRM,Especializacao
@@ -39,16 +41,18 @@ public class Medico {
                 this.crm = partes[2];
                 this.idade = Integer.parseInt(partes[3].trim());
                 this.especializacao = Especialidade.valueOf(partes[4]);
-                this.valido=true;
+                this.custoConsulta = Double.parseDouble(partes[5].trim());
+                this.valido = true;
             }
             catch (Exception e){
                 System.err.println("Erro na formatação do Médico");
-                this.nome="Invalido";
-                this.idade=0;
-                this.cpf="";
-                this.crm="";
-                this.especializacao=null;
-                this.valido=false;
+                this.nome = "Invalido";
+                this.idade = 0;
+                this.cpf = "";
+                this.crm = "";
+                this.especializacao = null;
+                this.custoConsulta = 0.0;
+                this.valido = false;
             }
         }
 
@@ -105,6 +109,9 @@ public class Medico {
             System.out.println("Nome : " + getNome());
             System.out.println("Idade : " + getIdade());
             System.out.println("CPF : " + getCpf());
+            System.out.println("CRM : " + getCrm());
+            System.out.println("Especialização : " + getEspecializacao());
+            System.out.printf("Custo da Consulta : R$ %.2f\n", getCustoConsulta());
             System.out.println("==========================");
         }
 
@@ -118,17 +125,26 @@ public class Medico {
     public void setIdade(int idade) {
         this.idade = idade;
     }
+    public void setCustoConsulta(double custoConsultaconsulta){
+            this.custoConsulta=custoConsultaconsulta;
+    }
     public void setEspecializacao(Especialidade especializacao){this.especializacao=especializacao;}
 
-    public int getIdade(){
-        return idade;
+    public boolean getValido(){
+            return this.valido;
     }
-    public String getCrm(){return crm;}
-    public Especialidade getEspecializacao(){return especializacao;}
+    public int getIdade(){
+        return this.idade;
+    }
+    public String getCrm(){return this.crm;}
+    public Especialidade getEspecializacao(){return this.especializacao;}
     public String getCpf() {
-        return cpf;
+        return this.cpf;
     }
     public String getNome(){
-        return nome;
+        return this.nome;
+    }
+    public double getCustoConsulta(){
+            return this.custoConsulta;
     }
 }

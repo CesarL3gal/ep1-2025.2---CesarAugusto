@@ -1,6 +1,6 @@
 public class Quarto {
-    int numero;
-    boolean ocupado;
+    private int numero;
+    private boolean ocupado;
 
     public Quarto(int numero){
         this.numero=numero;
