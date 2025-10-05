@@ -15,7 +15,7 @@ public class CSV {
 
         try (FileWriter CSV = new FileWriter("Pacientes.csv", true)) {
 
-            CSV.write(Paciente.nome + ";" + Paciente.cpf + ";" + Paciente.idade + ";" + Paciente.planoSaude + ";" + "\n");
+            CSV.write(Paciente.nome + ";" + Paciente.cpf + ";" + Paciente.idade + ";" + Paciente.planoSaude + "\n");
         } catch (IOException erro) {
             System.out.println("Erro ao Cadastrar Paciente!");
         }
@@ -26,7 +26,7 @@ public class CSV {
 
         try (FileWriter CSV = new FileWriter("Medicos.csv", true)) {
 
-            CSV.write(Medico.nome + ";" + Medico.cpf + ";" + Medico.idade +  ";" + Medico.especializacao + ";" + "\n");
+            CSV.write(Medico.nome + ";" + Medico.cpf + ";" + Medico.crm +  ";" + Medico.idade + ";" + Medico.especializacao + "\n");
 
         } catch (IOException erro) {
 
@@ -49,79 +49,21 @@ public class CSV {
         }
     }
 
-    public static void CSV_Internacao(Internacao Internacao){
-        try (FileWriter CSV = new FileWriter("Internação.csv", true)){
-            CSV.write(  ";"  );
-        }
-        catch (IOException erro) {
-            System.out.println("Erro ao Cadastrar Internação!");
-        }
-    }
+//    public static void CSV_Internacao(Internacao Internacao){
+//        try (FileWriter CSV = new FileWriter("Internação.csv", true)){
+//            CSV.write();
+//        }
+//        catch (IOException erro) {
+//            System.out.println("Erro ao Cadastrar Internação!");
+//        }
+//    }
+
+
+
+
 
 
     //Area das Leituras
-
-
-    public static void lerMedico() {
-        try {
-            BufferedReader lerMedico = new BufferedReader(new FileReader("Medicos.CSV"));
-            String linha;
-            while ((linha = lerMedico.readLine()) != null) {
-
-                String[] partes = linha.split(";");
-                for (int i = 0; i < partes.length; i++) {
-                    System.out.printf(partes[i] + " ");
-                }
-                System.out.println();
-
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Não achou o arquivos");
-        } catch (IOException e) {
-            System.out.println("Deu erro na leitura rapaiz");
-        }
-    }
-
-    public static void lerConsulta() {
-        try {
-            BufferedReader lerConsultas = new BufferedReader(new FileReader("Consultas.CSV"));
-            String linha;
-            while ((linha = lerConsultas.readLine()) != null) {
-
-                String[] partes = linha.split(";");
-                for (int i = 0; i < partes.length; i++) {
-                    System.out.printf(partes[i] + " ");
-                }
-                System.out.println();
-
-
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Não achou o arquivos");
-        } catch (IOException e) {
-            System.out.println("Deu erro na leitura rapaiz");
-        }
-    }
-
-    public static void lerPaciente() {
-        try {
-            BufferedReader lerPaciente = new BufferedReader(new FileReader("Pacientes.CSV"));
-            String linha;
-            while ((linha = lerPaciente.readLine()) != null) {
-
-                String[] partes = linha.split(";");
-                for (int i = 0; i < partes.length; i++) {
-                    System.out.printf(partes[i] + " ");
-                }
-                System.out.println();
-
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Não achou o arquivos");
-        } catch (IOException e) {
-            System.out.println("Deu erro na leitura rapaiz");
-        }
-    }
 
 
     // Resetar o Array List, usar toda vez que faz uma modificação, pra garantir que fique em tempo real
@@ -150,7 +92,6 @@ public class CSV {
     public static ArrayList<Medico> relerMedico() {
         ArrayList<Medico> lista = new ArrayList<>();
         try {
-
             BufferedReader lerMedico = new BufferedReader(new FileReader("Medicos.CSV"));
             String linha;
             while ((linha = lerMedico.readLine()) != null) {
@@ -178,6 +119,25 @@ public class CSV {
                 String[] partes = linha.split(";");
                 Consultas consultas = new Consultas(linha,paciente,medico);
                 lista.add(consultas);
+            }
+            return lista;
+        } catch (FileNotFoundException e) {
+            System.out.println("Não achou o arquivos");
+        } catch (IOException e) {
+            System.out.println("Deu erro na leitura rapaiz");
+        }
+        return lista;
+    }
+
+    public static ArrayList<Internacao> relerInternacao(ArrayList<Paciente> paciente, ArrayList<Medico> medico) {
+        ArrayList<Internacao> lista = new ArrayList<>();
+        try {
+            BufferedReader lerInternacao = new BufferedReader(new FileReader("Internacao.CSV"));
+            String linha;
+            while ((linha = lerInternacao.readLine()) != null) {
+                String[] partes = linha.split(";");
+                Internacao internacao = new Internacao(linha, paciente, medico);
+                lista.add(internacao);
             }
             return lista;
         } catch (FileNotFoundException e) {

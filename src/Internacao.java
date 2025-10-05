@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class Internacao {
@@ -7,7 +8,7 @@ public class Internacao {
     private LocalDate dataEntrada;
     private LocalDate dataSaida; // Null se ainda estiver internado
     private double custoTotal;
-    private int quarto;
+    private Quarto quarto;
 
 
     public Internacao(Paciente paciente, Medico medico, LocalDate entrada, LocalDate Saida, double custo, int quarto){
@@ -16,20 +17,25 @@ public class Internacao {
         this.dataEntrada=entrada;
         this.dataSaida=Saida;
         this.custoTotal=custo;
-        this.quarto=quarto;
+        this.quarto = new Quarto(quarto);
     }
-
-    public Internacao(String info, ArrayList<Paciente> listaPaciente ,ArrayList<Medico> listaMedico){ // Formato da info Paciente
+    //Criar uma internação
+    public Internacao(String info, ArrayList<Paciente> listaPaciente ,ArrayList<Medico> listaMedico){
+        // Formato da info Paciente,Medico,DataEntrada,DataSaida,Custo,Quarto
         String[] partes = info.split(";");
-        Paciente pessoa = paciente.encontrarPaciente(partes[0],listaPaciente);
-        Medico medico1 = medico.encontrarMedico(partes[1],listaMedico);
        try {
-           this.paciente = pessoa;
-           this.medico = medico1;
-           this.dataEntrada = LocalDate.parse(partes[2]);
-           this.dataSaida = LocalDate.parse(partes[3]);
-           this.custoTotal = Double.parseDouble(partes[4]);
-           this.quarto = Integer.parseInt(partes[5]);
+           this.paciente = Paciente.encontrarPaciente(partes[0],listaPaciente);
+           this.medico = Medico.encontrarMedico(partes[1],listaMedico);
+
+           try {
+               this.dataEntrada = LocalDate.parse(partes[2].trim());
+               this.dataSaida = LocalDate.parse(partes[3].trim());
+           }
+           catch (DateTimeParseException e){
+               System.err.println("Erro na formatação das datas");
+           }
+           this.custoTotal = Double.parseDouble(partes[4].trim());
+           this.quarto = new Quarto(Integer.parseInt(partes[5].trim()));
        }
        catch (ArrayIndexOutOfBoundsException e){
            System.err.println("Erro na formatação do CSV");

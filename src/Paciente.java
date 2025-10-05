@@ -6,15 +6,16 @@ public class Paciente{
     int idade;
     String cpf;
     String planoSaude;
-    List<Consultas> consultasList= new ArrayList<>();
-    List<Internacao> internacaoList = new ArrayList<>();
-    //teste
+    boolean valido;
+    ArrayList<Consultas> HistoricoConsulta = new ArrayList<>();
+    ArrayList<Internacao> HistoricoInternacao = new ArrayList<>();
     //Construtores
     public Paciente(){
             this.nome = "";
             this.idade = 0;
             this.cpf = "";
             this.planoSaude = "";
+            this.valido=false;
     }
 
     public Paciente(String nome, int idade, String cpf,  String planoSaude ){
@@ -22,83 +23,41 @@ public class Paciente{
             this.idade = idade;
             this.cpf = cpf;
             this.planoSaude = planoSaude;
+            this.valido=true;
     }
 
     public Paciente(String info){
-                String[] partes= info.split(";");
-                try {
-                    this.nome = partes[0];
-                    this.cpf = partes[1].trim();
-                    this.idade = Integer.parseInt(partes[2]);
-                    this.planoSaude = partes[3].trim();
-                }
-                catch (ArrayIndexOutOfBoundsException e){
-                    System.err.println("Erro na formatação do Paciente");
-                }
+        try {
+            String[] partes= info.split(";");
+
+            if(partes.length != 4){
+                throw new Exception("A linha deve conter 4 campos");
+            }
+            this.nome = partes[0];
+            this.cpf = partes[1].trim();
+            this.idade = Integer.parseInt(partes[2].trim());
+            this.planoSaude = partes[3].trim();
+            this.valido = true;
+        }
+        catch (Exception e){
+            System.err.println("Erro na formatação do Paciente");
+            //corrigir o nullpointerexception
+            this.valido = false;
+            this.nome="INVALIDO";
+            this.cpf="";
+            this.idade=0;
+            this.planoSaude="";
+        }
     }
+
+
+
 
     // Funções
-    public int plano(String info){
-            String[] planos = new String[5];
-            planos[0]="Sem Plano"; //00  - 0% de desconto
-            planos[1]="Militar";   //01  - 50% de desconto
-            planos[2]="Politico";  //02  - 100% de desconto
-            planos[3]="Especial";  //03  - 100% de desconto
-            planos[4]="Particular";//04  - 30% de desconto
-
-            if(info.equals(planos[1])){
-                return 1;
-            }
-            else if (info.equals(planos[2])) {
-                return 2;
-            }
-            else if (info.equals(planos[3])) {
-                return 3;
-            } else if (info.equals(planos[4])) {
-                return 4;
-            } else{
-                return 0;
-            }
-        }
-
-
-    public boolean compCpf(String cpf,ArrayList<Paciente> lista){
-        try {
-            for (Paciente s : lista) {
-                if (s.getCpf().trim().equals(cpf)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        catch(ArrayIndexOutOfBoundsException e){
-            return true;
-        }
-    }
-    public String pegaCpf(String info){
-        String[] partes = info.split(";");
-        return partes[1];
-    }
-
-
-
-    //Ordem do CSV Consulta : CPF do Paciente; CPF do Medico; Data; Hora; Motivo
-    public ArrayList<Consultas> getConsultas(String cpf){
-        ArrayList<Consultas> consultasTotais = CSV.relerConsulta();
-        ArrayList<Consultas> consultas = new ArrayList<>();
-        for(Consultas c: consultasTotais){
-            if(c.paciente.getCpf().trim().equals(cpf)){
-                consultas.add(c);
-            }
-        }
-        return consultas;
-    }
-
-    public static String encontrarPessoa(String cpf, ArrayList<String> lista){
-        for (String s : lista) {
-            String[] partes = s.split(";");
-            if (partes[1].trim().equals(cpf)) {
-                return s;
+    public static String encontrarPessoa(String cpf, ArrayList<Paciente> lista){
+        for (Paciente s : lista) {
+            if (s.getCpf().trim().equals(cpf)) {
+                return s.toString();
             }
         }
         return null;
@@ -113,53 +72,86 @@ public class Paciente{
         return null;
     }
 
-        public void setAll(String info){
-            String[] partes= info.split(";");
-            this.nome = partes[0];
-            this.cpf = partes[1];
-            this.idade = Integer.parseInt(partes[2]);
-            this.planoSaude = partes[3];
+    public static Paciente pegarHistoricoConsulta(Paciente paciente, ArrayList<Consultas> lista){
+        for(Consultas c : lista){
+            if(paciente.getCpf().trim().equals(c.getPaciente().getCpf().trim())){
+                paciente.adcionarConsultaHistorico(c);
+            }
         }
+        return paciente;
+    }
 
+    public void adcionarConsultaHistorico(Consultas consulta){
+        this.HistoricoConsulta.add(consulta);
+    }
+    public void setHistoricoConsulta(ArrayList<Consultas> historicoConsulta){
+        this.HistoricoConsulta = historicoConsulta;
+    }
+    public ArrayList<Consultas> getHistoricoConsulta(){
+        return this.HistoricoConsulta;
+    }
 
-        public void setNome(String nome){
-            this.nome=nome;
-        }
-        public void setCpf(String cpf) {
+    public void adcionarInternacaoHistorico(Internacao internacao){
+        this.HistoricoInternacao.add(internacao);
+    }
+    public void setHistoricoInternacao(ArrayList<Internacao> historicoInternacao){
+        this.HistoricoInternacao = historicoInternacao;
+    }
+    public ArrayList<Internacao> getHistoricoInternacao(){
+        return this.HistoricoInternacao;
+    }
+
+    public void setNome(String nome){
+        this.nome=nome;
+    }
+    public void setCpf(String cpf) {
             this.cpf = cpf;
         }
-        public void setIdade(int idade) {
+    public void setIdade(int idade) {
             this.idade = idade;
         }
-        public void setPlanoSaude(String planoSaude){
+
+    public void setPlanoSaude(String planoSaude){
         this.planoSaude=planoSaude;
     }
-        public void setConsultasList(List<Consultas> consultasList){
-        this.consultasList=consultasList;
-    }
-
-        public int getIdade(){
+    public int getIdade(){
             return idade;
         }
-        public String getCpf() {
+    public String getCpf() {
             return cpf;
         }
-        public String getNome(){
+    public String getNome(){
             return nome;
         }
-        public String getPlanoSaude(){
+
+    public String getPlanoSaude(){
         return this.planoSaude;
     }
-        public List<Consultas> getConsultasList(){
-        return this.consultasList;
-    }
-
 
         public void getInfo(){
             System.out.println("==========================");
             System.out.println("Nome : " + getNome());
             System.out.println("Idade : " + getIdade());
             System.out.println("CPF : " + getCpf());
+            System.out.println("Plano De Saude : " + getPlanoSaude());
             System.out.println("==========================");
         }
+//    }
+//        return consultas;
+//        }
+//            }
+//                consultas.add(c);
+//            if(c.paciente.getCpf().trim().equals(cpf)){
+//        for(Consultas c: consultasTotais){
+//        ArrayList<Consultas> consultas = new ArrayList<>();
+//        ArrayList<Consultas> consultasTotais = CSV.relerConsulta();
+//    public ArrayList<Consultas> getConsultas(String cpf){
+//Ordem do CSV Consulta : CPF do Paciente; CPF do Medico; Data; Hora; Motivo
+//    public void setAll(String info){
+//            String[] partes= info.split(";");
+//            this.nome = partes[0];
+//            this.cpf = partes[1];
+//            this.idade = Integer.parseInt(partes[2]);
+//            this.planoSaude = partes[3];
+//        }
 }

@@ -12,7 +12,7 @@ public class Consultas {
     public Consultas(Paciente paciente,Medico medico, LocalDateTime data, String motivo){
         this.paciente = paciente;
         this.medico = medico;
-        this.data = data;
+        this.data = data; //Formato aaaa-mm-ddthh:mm
         this.motivo = motivo;
     }
 
@@ -21,23 +21,7 @@ public class Consultas {
         try {
             this.paciente = paciente;
             this.medico = medico;
-            this.data = LocalDateTime.parse(partes[2]);
-            this.motivo = partes[3];
-        }
-        catch(ArrayIndexOutOfBoundsException e){
-            System.err.println("Formatação Errada");
-        }
-    }
-
-    public Consultas(String info, ArrayList<Paciente> listaPaciente, ArrayList<Medico> listaMedicos){
-        try {
-            String[] partes= info.split(";");
-            String cpf=partes[0].trim();
-            String crm=partes[1].trim();
-
-            this.paciente=Paciente.encontrarPaciente(cpf,listaPaciente);
-            this.medico=Medico.encontrarMedico(crm,listaMedicos);
-            this.data = LocalDateTime.parse(partes[2]);
+            this.data = LocalDateTime.parse(partes[2].trim());
             this.motivo = partes[3];
         }
         catch(ArrayIndexOutOfBoundsException e){
@@ -47,26 +31,46 @@ public class Consultas {
             System.err.println("Erro na formatação da data");
         }
     }
+    //Construtor CSV
+    //cpf paciente, crm medico, data e hora, motivo
+    public Consultas(String info, ArrayList<Paciente> listaPaciente, ArrayList<Medico> listaMedicos){
+        try {
+            String[] partes= info.split(";");
+            String cpf=partes[0].trim();
+            String crm=partes[1].trim();
 
-    //Compara CPF com todos os termos do Array List
-    //Ordem do CSV: Paciente; CPF do Paciente; Medico; CRM do Medico; Data; Hora; Motivo
-    public boolean compCpf(String cpf, ArrayList<String> lista){
-        for (String s : lista) {
-            String[] partes = s.split(";");
-            if (partes[1].trim().equals(cpf.trim())) {
-                return true;
-            }
+            this.paciente=Paciente.encontrarPaciente(cpf,listaPaciente);
+            this.medico=Medico.encontrarMedicoPorCrm(crm,listaMedicos);
+            this.data = LocalDateTime.parse(partes[2]);
+            this.motivo = partes[3];
         }
-        return false;
+        catch(ArrayIndexOutOfBoundsException e){
+            System.err.println("Erro na formatação da Consulta");
+        }
+        catch (DateTimeParseException e){
+            System.err.println("Erro na formatação da Data");
+        }
     }
-    public String pegaCpfPaciente(String info){
-        String[] partes = info.split(";");
-        return partes[1];
-    }
-    public String pegaCpfMedico(String info){
-        String[] partes = info.split(";");
-        return partes[3];
-    }
+
+//    //Compara CPF com todos os termos do Array List
+//    //Ordem do CSV: Paciente; CPF do Paciente; Medico; CRM do Medico; Data; Hora; Motivo
+//    public boolean compCpf(String cpf, ArrayList<String> lista){
+//        for (String s : lista) {
+//            String[] partes = s.split(";");
+//            if (partes[1].trim().equals(cpf.trim())) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//    public String pegaCpfPaciente(String info){
+//        String[] partes = info.split(";");
+//        return partes[1];
+//    }
+//    public String pegaCpfMedico(String info){
+//        String[] partes = info.split(";");
+//        return partes[3];
+//    }
 
 
     public Paciente getPaciente(){
@@ -94,6 +98,5 @@ public class Consultas {
         System.out.println("Motivo : " + getMotivo());
         System.out.println("==========================");
     }
-    //teste
 }
 
