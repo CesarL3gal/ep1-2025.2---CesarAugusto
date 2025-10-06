@@ -12,7 +12,7 @@ public class Consultas {
     public Consultas(Paciente paciente,Medico medico, LocalDateTime data, String motivo){
         this.paciente = paciente;
         this.medico = medico;
-        this.data = data; //Formato aaaa-mm-ddthh:mm
+        this.data = data; //Formato aaaa-mm-ddThh:mm
         this.motivo = motivo;
     }
 
@@ -71,6 +71,7 @@ public class Consultas {
 //        String[] partes = info.split(";");
 //        return partes[3];
 //    }
+
     public double getCustoFinal(){
         if(medico == null || paciente == null){
             return 0.0;

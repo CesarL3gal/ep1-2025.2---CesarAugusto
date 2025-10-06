@@ -372,7 +372,17 @@ public class Main {
                                         System.out.println("Saindo do Cadastro");
                                         break;
                                     }
-
+                                    boolean taInternado = false;
+                                    for(Internacao i : listaInterancao){
+                                        if(i.getPaciente()==paciente && (i.getDataSaida()==null)){
+                                            System.out.println("Essa pessoa já está internada");
+                                            taInternado = true;
+                                            break;
+                                        }
+                                    }
+                                    if(taInternado){
+                                        break;
+                                    }
                                     System.out.println("Data de entrada será considerada o momento atual");
                                     LocalDateTime dataEntrada = LocalDateTime.now();
                                     /*Mesmo custo pra todo paciente*/
