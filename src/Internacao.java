@@ -55,14 +55,6 @@ public class Internacao {
        }
     }
 
-//    public double getCustoDiario(){
-//        if(paciente == null){
-//            return this.custoTotal;
-//        }
-//        double custo = 20.0;
-//        double desconto = paciente.getPlanoSaude().getDesconto();
-//        return custo * (1-desconto);
-//    }
     public static double getCustoDiario(Paciente paciente){
         if(paciente == null){
             return 150.0;

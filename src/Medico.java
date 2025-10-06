@@ -92,7 +92,7 @@ public class Medico {
     //True - horario disponivel
     public static boolean horaDisponivel(Medico medico, LocalDateTime data){
             for(Consultas consulta : medico.getHistoricoConsulta()){
-                if(data.isBefore(consulta.getData().plusMinutes(30))){
+                if(data.isBefore(consulta.getData().plusMinutes(30)) && data.isAfter(consulta.getData())){
                     return false;
                 }
             }
