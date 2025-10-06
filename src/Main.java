@@ -252,7 +252,7 @@ public class Main {
                                         System.out.println("Saindo do Cadastro");
                                         break;
                                     }
-                                    System.out.println("Escreva o Crm do Médico");
+                                    System.out.println("Escreva o Crm do Médico:");
                                     String Crm = scan.nextLine();
                                     Medico medico = Medico.encontrarMedicoPorCrm(Crm.trim(),listaMedico);
                                     if(medico == null){
@@ -263,22 +263,19 @@ public class Main {
                                     System.out.println("Escreva a data e hora da consulta no formato Ano-Mes-DiaTHH:MM (ex: 2025-06-10T12:00)");
                                     String data = scan.nextLine();
                                     LocalDateTime dataFinal;
-                                    boolean horarioDisponivel = true;
                                     try {
                                         dataFinal = LocalDateTime.parse(data.trim());
-                                        horarioDisponivel = Medico.horaDisponivel(medico, dataFinal);
                                     }
                                     catch (Exception e){
                                         System.err.println("Formato Incorreto da Data");
                                         break;
                                     }
-                                    if(horarioDisponivel) {
+                                    if(Medico.horaDisponivel(medico, dataFinal)) {
                                         System.out.println("Escreva o Motivo da consulta: ");
                                         String motivo = scan.nextLine();
                                         //Cria uma consulta com paciente, medico, data e motivo
-                                        LocalDateTime Datafinal = LocalDateTime.parse(data.trim());
-                                        Consultas consulta = new Consultas(paciente, medico, Datafinal, motivo);
-
+                                        Consultas consulta = new Consultas(paciente, medico, dataFinal, motivo);
+                                        //
                                         listaConsulta.add(consulta);
                                         paciente.adcionarConsultaHistorico(consulta);
                                         medico.adcionarConsultaHistorico(consulta);
@@ -288,7 +285,7 @@ public class Main {
                                         consulta.getInfo();
                                     }
                                     else {
-                                        System.out.println("Cancelando o Cadastro por Horario conflitante");
+                                        System.out.println("Cancelando o Cadastro por Horario Conflitante");
                                     }
                                 }
 

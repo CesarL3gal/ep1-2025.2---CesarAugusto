@@ -101,7 +101,7 @@ public class CSV {
 // Retorna uma leitura de um arquivo CSV como ArrayList
 //Reler CSV dos Paceintes
     public static ArrayList<Paciente> relerPaciente() {
-        ArrayList<Paciente> lista = new ArrayList<Paciente>();
+        ArrayList<Paciente> lista = new ArrayList<>();
         try {
             BufferedReader lerPaciente = new BufferedReader(new FileReader("Pacientes.csv"));
             String linha;

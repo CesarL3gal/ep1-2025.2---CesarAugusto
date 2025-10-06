@@ -38,14 +38,14 @@ public class Medico {
             if (partes.length == 6) {
                 try {
                     this.nome = partes[0];
-                    this.cpf = partes[1];
-                    this.crm = partes[2];
+                    this.cpf = partes[1].trim();
+                    this.crm = partes[2].trim();
                     this.idade = Integer.parseInt(partes[3].trim());
-                    this.especializacao = Especialidade.valueOf(partes[4].trim().toUpperCase());
+                    this.especializacao = Especialidade.valueOf(partes[4].trim());
                     this.custoConsulta = Double.parseDouble(partes[5].trim());
                     this.valido = true;
                 } catch (Exception e) {
-                    System.err.println("Erro na formatação do Médico");
+                    System.err.println("Erro na formatação do Médico " + info);
                     this.nome = "Invalido";
                     this.idade = 0;
                     this.cpf = "";
@@ -89,7 +89,7 @@ public class Medico {
     }
 
     //False - horario não disponivel
-    //True -horario disponivel
+    //True - horario disponivel
     public static boolean horaDisponivel(Medico medico, LocalDateTime data){
             for(Consultas consulta : medico.getHistoricoConsulta()){
                 if(data.isBefore(consulta.getData().plusMinutes(30))){

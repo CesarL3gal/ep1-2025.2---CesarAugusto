@@ -99,7 +99,7 @@ public class Consultas {
 
     public void getInfo(){
         System.out.println("==========================");
-        System.out.println("Paciente : " + getPaciente().getNome() + "Plano : " + getPaciente().getPlanoSaude());
+        System.out.println("Paciente : " + getPaciente().getNome() + " Plano : " + getPaciente().getPlanoSaude());
         System.out.println("Medico : " + getMedico().getNome());
         System.out.println("Data : " + getData());
         System.out.println("Motivo : " + getMotivo());
