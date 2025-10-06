@@ -32,27 +32,32 @@ public class Medico {
             this.valido = true;
         }
 
-        //Formato Médico Nome,Idade,CPF,CRM,Especializacao
-        public Medico(String info){
-            String[] partes= info.split(";");
-            try {
-                this.nome = partes[0];
-                this.cpf = partes[1];
-                this.crm = partes[2];
-                this.idade = Integer.parseInt(partes[3].trim());
-                this.especializacao = Especialidade.valueOf(partes[4]);
-                this.custoConsulta = Double.parseDouble(partes[5].trim());
-                this.valido = true;
+        //Formato Médico Nome,CPF,CRM,Idade,Especializacao;CustoConsulta
+        public Medico(String info) {
+            String[] partes = info.split(";");
+            if (partes.length == 6) {
+                try {
+                    this.nome = partes[0];
+                    this.cpf = partes[1];
+                    this.crm = partes[2];
+                    this.idade = Integer.parseInt(partes[3].trim());
+                    this.especializacao = Especialidade.valueOf(partes[4].trim().toUpperCase());
+                    this.custoConsulta = Double.parseDouble(partes[5].trim());
+                    this.valido = true;
+                } catch (Exception e) {
+                    System.err.println("Erro na formatação do Médico");
+                    this.nome = "Invalido";
+                    this.idade = 0;
+                    this.cpf = "";
+                    this.crm = "";
+                    this.especializacao = null;
+                    this.custoConsulta = 0.0;
+                    this.valido = false;
+                }
             }
-            catch (Exception e){
-                System.err.println("Erro na formatação do Médico");
-                this.nome = "Invalido";
-                this.idade = 0;
-                this.cpf = "";
-                this.crm = "";
-                this.especializacao = null;
-                this.custoConsulta = 0.0;
-                this.valido = false;
+            else{
+                System.err.println("Formatação invalida");
+                this.valido=false;
             }
         }
 
@@ -73,10 +78,10 @@ public class Medico {
         }
         return null;
     }
-
     public static Medico pegarHistoricoConsulta(Medico medico, ArrayList<Consultas> lista){
+            medico.getHistoricoConsulta().clear(); // limpa o historico pra evitar erros
        for(Consultas c : lista){
-           if(medico!= null && c.getMedico()!= null && medico.getCrm().equals(c.getMedico().getCrm())){
+           if(medico != null && c.getMedico()!= null && medico.getCrm().equals(c.getMedico().getCrm())){
              medico.adcionarConsultaHistorico(c);
            }
        }
@@ -97,14 +102,13 @@ public class Medico {
     public void adcionarConsultaHistorico(Consultas consulta){
         this.HistoricoConsulta.add(consulta);
     }
-
     public void setHistoricoConsulta(ArrayList<Consultas> historicoConsulta){
         this.HistoricoConsulta = historicoConsulta;
     }
     public ArrayList<Consultas> getHistoricoConsulta(){
         return this.HistoricoConsulta;
     }
-        public void getInfo(){
+    public void getInfo(){
             System.out.println("==========================");
             System.out.println("Nome : " + getNome());
             System.out.println("Idade : " + getIdade());
@@ -113,8 +117,9 @@ public class Medico {
             System.out.println("Especialização : " + getEspecializacao());
             System.out.printf("Custo da Consulta : R$ %.2f\n", getCustoConsulta());
             System.out.println("==========================");
-        }
+    }
 
+    //Setters
     public void setNome(String nome){
         this.nome=nome;
     }
@@ -129,7 +134,7 @@ public class Medico {
             this.custoConsulta=custoConsultaconsulta;
     }
     public void setEspecializacao(Especialidade especializacao){this.especializacao=especializacao;}
-
+    //Getters
     public boolean getValido(){
             return this.valido;
     }

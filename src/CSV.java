@@ -3,13 +3,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileReader;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class CSV {
-
-    public static final DateTimeFormatter Formata = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
 
     //Area das Escritas
     public static void CSV_Paciente(Paciente Paciente) {
@@ -41,22 +37,35 @@ public class CSV {
     }
 
     public static void CSV_Consulta(Consultas Consultas) {
-
         try (FileWriter CSV = new FileWriter("Consultas.csv", true)) {
-            String data = Consultas.getData().format(Formata);
-            CSV.write(Consultas.getPaciente().getCpf() + ";" + Consultas.getMedico().getCrm() + ";" + data + ";" + Consultas.getMotivo() + "\n");
+            CSV.write(Consultas.getPaciente().getCpf() + ";" + Consultas.getMedico().getCrm() + ";" + Consultas.getData().toString() + ";" + Consultas.getMotivo() + "\n");
         } catch (IOException erro) {
             System.out.println("Erro ao Cadastrar Consulta!");
+        }
+    }
+    public static void CSV_ConsultaAtualizar(ArrayList<Consultas> listaConsulta){
+        try (FileWriter CSV = new FileWriter("Internacao.csv", false)) {
+            for(Consultas consultas : listaConsulta) {
+                CSV.write(consultas.getPaciente().getCpf() + ";" + consultas.getMedico().getCrm() + ";" + consultas.getData().toString() + ";" + consultas.getMotivo() + "\n");
+            }
+        } catch (IOException erro) {
+            System.out.println("Erro ao Atualizar Internação!");
         }
     }
 
 
     // CPF;DataEntrada;DataSaida;Quarto;Custo
     public static void CSV_Internacao(Internacao internacao) {
-        String dataEntrada = internacao.getDataEntrada().format(Formata);
-        String dataSaida="";
+        String dataEntrada = internacao.getDataEntrada().toString();
+        String dataSaida;
+        if(internacao.getDataSaida()!=null) {
+            dataSaida = internacao.getDataSaida().toString();
+        }
+        else {
+            dataSaida = "";
+        }
         try (FileWriter CSV = new FileWriter("Internacao.csv", true)) {
-            CSV.write(internacao.getPaciente().getCpf() + ";" + dataEntrada + ";" + dataSaida + ";" + internacao.getQuarto().getNumero() + ";" + internacao.getCustoFinal() + "\n");
+            CSV.write(internacao.getPaciente().getCpf() + ";" + dataEntrada + ";" + dataSaida + ";" + internacao.getQuarto().getNumero() + ";" + Internacao.getCustoDiario(internacao.getPaciente()) + "\n");
         } catch (IOException erro) {
             System.out.println("Erro ao Cadastrar Internação!");
         }
@@ -65,9 +74,15 @@ public class CSV {
     public static void CSV_InternacaoAtualizar(ArrayList<Internacao> listaInternacao){
         try (FileWriter CSV = new FileWriter("Internacao.csv", false)) {
             for(Internacao internacao : listaInternacao) {
-                String dataEntrada = internacao.getDataEntrada().format(Formata);
-                String dataSaida = internacao.getDataSaida().format(Formata);
-                CSV.write(internacao.getPaciente().getCpf() + ";" + dataEntrada + ";" + dataSaida + ";" + internacao.getQuarto().getNumero() + ";" + internacao.getCustoFinal() + "\n");
+                String dataSaida;
+                if(internacao.getDataSaida()!=null) {
+                    dataSaida = internacao.getDataSaida().toString();
+                }
+                else {
+                    dataSaida = "";
+                }
+                String dataEntrada = internacao.getDataEntrada().toString();
+                CSV.write(internacao.getPaciente().getCpf() + ";" + dataEntrada + ";" + dataSaida + ";" + internacao.getQuarto().getNumero() + ";" + Internacao.getCustoDiario(internacao.getPaciente()) + "\n");
             }
         } catch (IOException erro) {
             System.out.println("Erro ao Atualizar Internação!");
@@ -106,7 +121,6 @@ public class CSV {
     //Reler CSV dos Médicos
     public static ArrayList<Medico> relerMedico() {
         ArrayList<Medico> lista = new ArrayList<>();
-        File file = new File ("Medicos.csv");
         try {
             BufferedReader lerMedico = new BufferedReader(new FileReader("Medicos.csv"));
             String linha;
@@ -127,7 +141,6 @@ public class CSV {
     //Reler CSV das Consultas
     public static ArrayList<Consultas> relerConsulta(ArrayList<Paciente> paciente, ArrayList<Medico> medico) {
         ArrayList<Consultas> lista = new ArrayList<>();
-        File file = new File ("Consultas.csv");
         try {
 
             BufferedReader lerConsulta = new BufferedReader(new FileReader("Consultas.csv"));
@@ -147,7 +160,6 @@ public class CSV {
 
     public static ArrayList<Internacao> relerInternacao(ArrayList<Paciente> paciente) {
         ArrayList<Internacao> lista = new ArrayList<>();
-        File file = new File ("Internacao.csv");
         try {
             BufferedReader lerInternacao = new BufferedReader(new FileReader("Internacao.csv"));
             String linha;

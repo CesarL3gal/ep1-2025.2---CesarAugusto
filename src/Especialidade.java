@@ -1,10 +1,10 @@
 public enum Especialidade {
     Cardiologia("Cardiologia"),
-    Pediatria("Pediatria"),
+    Pediatra("Pediatra"),
     Ortopedia("Ortopedia"),
     Clinica("Clinica"),
-    Neurologista("Neurologista"),
-    Dermatologista("Dermatologista");
+    Neurologia("Neurologia"),
+    Dermatologia("Dermatologia");
     final String descricao;
 
     Especialidade(String descricao) {

@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -11,27 +10,37 @@ public class Internacao {
      private Quarto quarto;
 
     // CPF;DataEntrada;DataSaida;Quarto;Custo
-    public Internacao(Paciente paciente, LocalDateTime entrada, LocalDateTime Saida, double custo, int quarto){
+    public Internacao(Paciente paciente, LocalDateTime entrada, LocalDateTime saida, double custo, int quarto){
         this.paciente=paciente;
         this.dataEntrada=entrada;
-        this.dataSaida=Saida;
+        this.dataSaida= saida;
         this.custoTotal=custo;
         this.quarto = new Quarto(quarto);
     }
     //Criar uma internação pelo CSV
     // CPF;DataEntrada;DataSaida;Quarto;Custo
-        public Internacao(String info, ArrayList<Paciente> listaPaciente){
+    public Internacao(String info, ArrayList<Paciente> listaPaciente){
         // Formato da info Paciente,DataEntrada,DataSaida,Custo,Quarto
         String[] partes = info.split(";");
-       try {
-           this.paciente = Paciente.encontrarPaciente(partes[0].trim(),listaPaciente);
+        try {
+        this.paciente = Paciente.encontrarPaciente(partes[0].trim(),listaPaciente);
+        if(this.paciente == null){
+            System.out.println("Paciente não encontrado");
+            return;
+        }
            try {
-               this.dataEntrada = LocalDateTime.parse(partes[1].trim().formatted(CSV.Formata));
-               this.dataSaida = LocalDateTime.parse(partes[2].trim().formatted(CSV.Formata));
+               this.dataEntrada = LocalDateTime.parse(partes[1].trim());
+               if(partes[2]!=null && !partes[2].trim().isEmpty()) {
+                   this.dataSaida = LocalDateTime.parse(partes[2].trim());
+               }
+               else{
+                   this.dataSaida = null;
+               }
            }
            catch (DateTimeParseException e){
                System.err.println("Erro na formatação das datas");
            }
+
            this.quarto = new Quarto(Integer.parseInt(partes[3].trim()));
            this.custoTotal = Double.parseDouble(partes[4].trim());
        }
@@ -41,25 +50,28 @@ public class Internacao {
        catch (ArrayIndexOutOfBoundsException e){
            System.err.println("Erro na formatação do CSV");
        }
+       catch (Exception e) {
+            System.err.println("Algo deu errado na criação da Internação");
+       }
     }
 
-    public double getCustoFinal(){
+//    public double getCustoDiario(){
+//        if(paciente == null){
+//            return this.custoTotal;
+//        }
+//        double custo = 20.0;
+//        double desconto = paciente.getPlanoSaude().getDesconto();
+//        return custo * (1-desconto);
+//    }
+    public static double getCustoDiario(Paciente paciente){
         if(paciente == null){
-            return 0.0;
+            return 150.0;
         }
-        double custo = 20.0;
+        double custo = 150.0;
         double desconto = paciente.getPlanoSaude().getDesconto();
-        return custo * (1-desconto);
+        return custo * (1 - desconto);
     }
-    public static double getCustoFinal(Paciente paciente){
-        if(paciente == null){
-            return 0.0;
-        }
-        double custo = 20.0;
-        double desconto = paciente.getPlanoSaude().getDesconto();
-        return custo * (1-desconto);
-    }
-
+    //Setters e Getters
     public Paciente getPaciente(){
         return paciente;
     }
@@ -86,7 +98,7 @@ public class Internacao {
         System.out.println("Paciente : " + getPaciente().getNome() + "  ,Plano : " + getPaciente().getPlanoSaude());
         System.out.println("DataEntrada : " + getDataEntrada());
         System.out.println("DataSaida: " + getDataSaida());
-        System.out.println("Custo com desconto : " + getCustoFinal());
+        System.out.printf("Custo com desconto : R$ %.2f\n", getCustoDiario(getPaciente()));
         System.out.println("Numero do Quarto : " + getQuarto().getNumero());
         System.out.println("==========================");
     }

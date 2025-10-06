@@ -13,10 +13,11 @@ public class Main {
         for(Medico m : listaMedico){
             Medico.pegarHistoricoConsulta(m,listaConsulta);
         }
+
         Scanner scan = new Scanner(System.in);
         char entrada = '0';
 
-        while(!(entrada == 'X')) {
+        while(entrada != 'X') {
             System.out.println("==========================");
             System.out.println("1: Medicos");
             System.out.println("2: Pacientes");
@@ -58,61 +59,58 @@ public class Main {
                                     }
                                 }
 
-                                case '2' ->{ //Ver lista de todos os médico
-                                    listaMedico =CSV.relerMedico();
+                                case '2' ->{ //Ver lista de todos os médicos
+                                    if(listaMedico.isEmpty()){
+                                        System.out.println("Nenhum médico cadastrado");
+                                    }
                                     for(Medico medico : listaMedico){
                                         int numero = listaMedico.indexOf(medico) + 1;
-                                        System.out.println("Numero do Paciente : " + numero);
+                                        System.out.println("Médico : " + numero);
                                         try {
                                             System.out.println("Nome : " + medico.getNome() + " CPF : " + medico.getCpf() + " CRM : " + medico.getCrm());
-                                            System.out.println("Idade : " + medico.getIdade() + " Especialização : " + medico.getEspecializacao());
+                                            System.out.println("Idade : " + medico.getIdade() + " Especialização : " + medico.getEspecializacao().name());
                                             System.out.println();
-                                        } catch (Exception e) {
+                                        }
+                                        catch (Exception e) {
                                             System.err.println("Erro na leitura do médico");
                                         }
                                     }
                                 }
+
                                 case '3'->{ // Pesquisar Médico
                                     System.out.println("Escreva o CRM do Médico");
                                     String Crm = scan.nextLine();
                                     Medico medico = Medico.encontrarMedicoPorCrm(Crm,listaMedico);
                                     if(medico != null) {
-                                        System.out.println("Pessoa encontrada:");
+                                        System.out.println("Médico encontrada:");
                                         medico.getInfo();
-
                                     }
                                     else{
                                         System.out.println("Crm não encontrado");
                                     }
                                 }
 
-                                case '4'->{//4: Ver histórico de consultas de um Medico
-                                    listaMedico = CSV.relerMedico();
-                                    listaConsulta = CSV.relerConsulta(listaPaciente,listaMedico);
+                                case '4'->{//4: Ver histórico de consultas de um Médico
                                     System.out.println("Escreva o Crm do Medico");
                                     String crm = scan.nextLine();
-                                    //Se não tiver medico com o crm
-                                    if(Medico.encontrarMedicoPorCrm(crm,listaMedico)==null){
+                                    Medico medico = Medico.encontrarMedicoPorCrm(crm,listaMedico);
+                                    if(medico==null){
                                         System.out.println("Medico não encontrado");
                                         break;
                                     }
                                     else{
-                                        Medico medico = Medico.encontrarMedicoPorCrm(crm,listaMedico);
                                         /*Ver consultas do Médico*/
-                                        medico = Medico.pegarHistoricoConsulta(medico,listaConsulta);
-                                        boolean achouConsulta = false;
-                                        if(medico != null && medico.getHistoricoConsulta() != null) {
+                                        if(medico != null && !medico.getHistoricoConsulta().isEmpty()){
+                                            System.out.println("Histórico de Consultas do Médico:" + medico.getNome());
                                             for (Consultas c : medico.getHistoricoConsulta()) {
                                                     c.getInfo();
-                                                    achouConsulta = true;
                                             }
                                         }
-                                        if(!achouConsulta){
+                                        else{
                                             System.out.println("Nenhum histórico de consultas encontrados para esse medico");
                                         }
                                     }
                                 }
-
 
                                 case 'V' -> {
                                     break;
@@ -132,7 +130,7 @@ public class Main {
                             System.out.println("2: Ver Pacientes Cadastrados :");
                             System.out.println("3: Pesquisar Paciente :");
                             System.out.println("4: Ver histórico de consultas de um Paciente :");
-                            System.out.println("5: Mudar Plano de Saude ");
+                            System.out.println("5: Mudar Plano de Saude :");
                             System.out.println("V: para voltar");
                             System.out.println("==========================");
                             entrada2 = scan.next().toUpperCase().charAt(0);
@@ -155,14 +153,16 @@ public class Main {
                                     }
                                 }
                                 case '2' -> { //2: Ver Pacientes Cadastrados :
-                                    listaPaciente =CSV.relerPaciente();
-                                    for(Paciente paciente : listaPaciente){
-                                        System.out.println("==========================");
-                                        int numero = listaPaciente.indexOf(paciente) + 1;
-                                        System.out.println("Numero do Paciente : " + numero);
-                                        System.out.println("Nome : " + paciente.getNome() +" CPF : " + paciente.getCpf());
-                                        System.out.println("Idade : " + paciente.getIdade() + " Plano : " + paciente.getPlanoSaude().name());
-                                        System.out.println("==========================");
+                                    if(listaPaciente.isEmpty()){
+                                        System.out.println("Nenhum paciente cadastrado");
+                                    }
+                                    else {
+                                        for(Paciente paciente : listaPaciente) {
+                                            int numero = listaPaciente.indexOf(paciente) + 1;
+                                            System.out.println("Paciente " + numero);
+                                            System.out.println("Nome : " + paciente.getNome() + " CPF : " + paciente.getCpf());
+                                            System.out.println("Idade : " + paciente.getIdade() + " Plano : " + paciente.getPlanoSaude().name());
+                                        }
                                     }
                                 }
 
@@ -182,20 +182,19 @@ public class Main {
                                 case '4' ->{ //4: Ver histórico de consultas de um paciente
                                     System.out.println("Escreva o CPF do Paciente");
                                     String cpf = scan.nextLine();
-                                    Paciente paciente =Paciente.encontrarPaciente(cpf,listaPaciente);
+                                    Paciente paciente = Paciente.encontrarPaciente(cpf,listaPaciente);
                                     if(paciente==null){
                                         System.out.println("Paciente não encontrado");
                                         break;
                                     }
-                                    /*Ver consultas do paciente
-                                    anda por cada consulta da lista de consultas e
-                                    pega o paciente, depois o cpf, e compara com o cpf*/
-                                    boolean achouConsulta = false;
-                                    for(Consultas c : paciente.getHistoricoConsulta()){
+                                    if(paciente.getHistoricoConsulta()!=null && !paciente.getHistoricoConsulta().isEmpty()) {
+                                        System.out.println("Historico de Consultas de : " +paciente.getNome());
+                                        for (Consultas c : paciente.getHistoricoConsulta()) {
                                             c.getInfo();
-                                            achouConsulta = true;
+
+                                        }
                                     }
-                                    if(!achouConsulta){
+                                    else{
                                         System.out.println("Nenhum histórico de consultas encontrados para esse paciente");
                                     }
                                 }
@@ -218,7 +217,7 @@ public class Main {
                                         System.out.println("Plano de Saude Atualizado");
                                         paciente.getInfo();
                                     } catch (Exception e) {
-                                        System.err.println("Plano de saude invalido");
+                                        System.err.println("Plano de saúde invalido");
                                     }
                                 }
                                 case 'V' -> {
@@ -247,7 +246,6 @@ public class Main {
                                 case '1' -> { // Cadastrar consulas
                                     System.out.println("Escreva o CPF do paciente:");
                                     String Cpf = scan.nextLine();
-                                    //Cria um paciente
                                     Paciente paciente = Paciente.encontrarPaciente(Cpf,listaPaciente);
                                     if(paciente == null){
                                         System.out.println("Paciente não encontrado");
@@ -256,20 +254,19 @@ public class Main {
                                     }
                                     System.out.println("Escreva o Crm do Médico");
                                     String Crm = scan.nextLine();
-                                    //Cria um médico
-                                    Medico temp = Medico.encontrarMedicoPorCrm(Crm.trim(),listaMedico);
-                                    if(temp == null){
+                                    Medico medico = Medico.encontrarMedicoPorCrm(Crm.trim(),listaMedico);
+                                    if(medico == null){
                                         System.out.println("Medico não encontrado");
                                         System.out.println("Saindo do Cadastro");
                                         break;
                                     }
-                                    Medico medico = Medico.pegarHistoricoConsulta(temp,listaConsulta);
-                                    System.out.println("Escreva a data e hora da consulta no formato Ano-Mes-DiaTHH:MM ");
+                                    System.out.println("Escreva a data e hora da consulta no formato Ano-Mes-DiaTHH:MM (ex: 2025-06-10T12:00)");
                                     String data = scan.nextLine();
+                                    LocalDateTime dataFinal;
                                     boolean horarioDisponivel = true;
                                     try {
-                                        LocalDateTime Datafinal = LocalDateTime.parse(data.trim());
-                                        horarioDisponivel = Medico.horaDisponivel(medico,Datafinal);
+                                        dataFinal = LocalDateTime.parse(data.trim());
+                                        horarioDisponivel = Medico.horaDisponivel(medico, dataFinal);
                                     }
                                     catch (Exception e){
                                         System.err.println("Formato Incorreto da Data");
@@ -281,7 +278,11 @@ public class Main {
                                         //Cria uma consulta com paciente, medico, data e motivo
                                         LocalDateTime Datafinal = LocalDateTime.parse(data.trim());
                                         Consultas consulta = new Consultas(paciente, medico, Datafinal, motivo);
+
                                         listaConsulta.add(consulta);
+                                        paciente.adcionarConsultaHistorico(consulta);
+                                        medico.adcionarConsultaHistorico(consulta);
+
                                         CSV.CSV_Consulta(consulta);
                                         System.out.println("Consulta Registrada:");
                                         consulta.getInfo();
@@ -294,27 +295,51 @@ public class Main {
 
 
                                 case '2' ->{//Ver todas as consultas
-                                    listaPaciente = CSV.relerPaciente();
-                                    listaMedico = CSV.relerMedico();
-                                    listaConsulta =CSV.relerConsulta(listaPaciente,listaMedico);
-                                    for(Consultas consulta : listaConsulta){
-                                        try {
-                                            int numero = listaConsulta.indexOf(consulta) + 1;
-                                            System.out.println("Numero da Consulta : " + numero);
-                                            System.out.println("Paciente : " + consulta.getPaciente().getNome() + " Medico : " + consulta.getMedico().getNome());
-                                            System.out.println("Data : " + consulta.getData() + " Motivo : " + consulta.getMotivo());
-                                            System.out.println();
-                                        } catch (Exception e) {
-                                            System.err.println("Erro em ler a consulta, medico ou paciente não existem");
-                                        }
-                                    }
+                                   if(listaConsulta.isEmpty()){
+                                       System.out.println("Nenhuma consulta cadastrada");
+                                   }
+                                   else {
+                                       for (Consultas consulta : listaConsulta) {
+                                           try {
+                                               int numero = listaConsulta.indexOf(consulta) + 1;
+                                               System.out.println("Numero da Consulta : " + numero);
+                                               System.out.println("Paciente : " + consulta.getPaciente().getNome() + " Medico : " + consulta.getMedico().getNome());
+                                               System.out.println("Data : " + consulta.getData() + " Motivo : " + consulta.getMotivo());
+                                               System.out.println();
+                                           } catch (Exception e) {
+                                               System.err.println("Erro em ler a consulta, medico ou paciente não existem");
+                                           }
+                                       }
+                                   }
                                 }
 
 
                                 case '3'->{ //Desmarcar Consulta
+                                    System.out.println("Digite o cpf do paciente");
+                                    String cpf = scan.nextLine();
+                                    System.out.println("Digite a data da consulta no formato (aaaa-mm-ddThh:mm)");
+                                    String dataCancela = scan.nextLine();
 
+                                    Consultas consulta = null;
+                                    for(Consultas c :listaConsulta){
+                                        if(c.getPaciente().getCpf().equals(cpf) && c.getData().toString().equals(dataCancela)){
+                                            consulta = c;
+                                            break;
+                                        }
+                                    }
+
+                                    if(consulta != null){
+                                        //Mexe nos arraylist para garantir que o arraylist está combinando com o arquivo csv
+                                        listaConsulta.remove(consulta);
+                                        consulta.getPaciente().getHistoricoConsulta().remove(consulta);
+                                        consulta.getMedico().getHistoricoConsulta().remove(consulta);
+                                        CSV.CSV_ConsultaAtualizar(listaConsulta);
+                                        System.out.println("Consulta desmarcada");
+                                    }
+                                    else{
+                                        System.out.println("Consulta não encontrada");
+                                    }
                                 }
-
                                 case 'V' -> {
                                     break;
                                 }
@@ -340,7 +365,8 @@ public class Main {
 
                             switch (entrada2) {
                                 case '1' -> { // Cadastrar Internações
-                                    // CPF;CRM;DataEntrada;DataSaida;Quarto;Custo
+                                    // CPF;DataEntrada;DataSaida;Quarto;Custo
+
                                     System.out.println("Escreva o CPF do paciente:");
                                     String Cpf = scan.nextLine();
                                     Paciente paciente = Paciente.encontrarPaciente(Cpf,listaPaciente);
@@ -349,16 +375,23 @@ public class Main {
                                         System.out.println("Saindo do Cadastro");
                                         break;
                                     }
+
                                     System.out.println("Data de entrada será considerada o momento atual");
                                     LocalDateTime dataEntrada = LocalDateTime.now();
-                                    double custo = Internacao.getCustoFinal(paciente);
+                                    /*Mesmo custo pra todo paciente*/
+                                    double custo = Internacao.getCustoDiario(paciente);
+
                                     System.out.println("Escreva número do Quarto da internação: ");
                                     int quarto = scan.nextInt();
                                     scan.nextLine();
                                         //Cria uma consulta com Paciente, dataEntrada, dataSaida, Custo e Quarto
                                     try {
                                         Internacao internacao = new Internacao(paciente, dataEntrada, null, custo, quarto);
+
+                                        //Garantir que o ArrayList e CSV combinem
                                         listaInterancao.add(internacao);
+                                        paciente.adcionarInternacaoHistorico(internacao);
+
                                         CSV.CSV_Internacao(internacao);
                                         System.out.println("Internação Registrada:");
                                         internacao.getInfo();
@@ -371,12 +404,13 @@ public class Main {
 
 
                                 case '2' ->{//Ver todas as Internações
-                                    listaPaciente = CSV.relerPaciente();
-                                    listaInterancao =CSV.relerInternacao(listaPaciente);
+                                    if(listaInterancao.isEmpty()){
+                                        System.out.println("Nenhuma internação registrada");
+                                    }
                                     for(Internacao internacao : listaInterancao){
                                         try {
                                             int numero = listaInterancao.indexOf(internacao) + 1;
-                                            System.out.println("Numero da Internação : " + numero);
+                                            System.out.println("Internação " + numero);
                                             System.out.println("Paciente : " + internacao.getPaciente().getNome());
                                             System.out.println("Data de Entrada : " + internacao.getDataEntrada() + " Data de Saida : " + internacao.getDataSaida());
                                             System.out.println("Numero do Quarto : " + internacao.getQuarto().getNumero());
@@ -387,25 +421,25 @@ public class Main {
                                 }
 
 
-
                                 case '3' ->{ //Finalizar Internação
                                     System.out.println("Escreva o CPF do Paciente Internado");
                                     String cpf = scan.nextLine();
 
                                     Paciente paciente = Paciente.encontrarPaciente(cpf,listaPaciente);
-                                    boolean encontrouInternação = false;
+                                    boolean encontrouInternacao = false;
                                     if(paciente != null){
                                         for(Internacao internacao : listaInterancao){
                                             if(internacao.getPaciente() == paciente){
                                              internacao.getQuarto().setDesocupado();
                                              internacao.setDataSaida();
                                              internacao.getInfo();
-                                             encontrouInternação = true;
+                                             paciente.getHistoricoInternacao().remove(internacao);
+                                             encontrouInternacao = true;
                                              break;
                                             }
                                         }
                                     }
-                                    if(encontrouInternação){
+                                    if(encontrouInternacao){
                                         CSV.CSV_InternacaoAtualizar(listaInterancao);
                                     }
                                     else{
