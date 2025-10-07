@@ -77,7 +77,7 @@ public class Internacao {
         return dataSaida;
     }
     public void setDataSaida(LocalDateTime dataSaida) {
-        this.dataSaida = dataSaida;
+        this.dataSaida= dataSaida;
     }
     public void setDataSaida(){
         this.dataSaida=LocalDateTime.now();

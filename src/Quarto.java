@@ -4,9 +4,10 @@ public class Quarto {
 
     public Quarto(int numero){
         this.numero=numero;
-        this.ocupado=false;
+        this.ocupado=true;
     }
-
+    //true = ocupado
+    //false = vazio
     public int getNumero(){
         return numero;
     }

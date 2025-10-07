@@ -115,8 +115,9 @@ public class Medico {
             System.out.println("CPF : " + getCpf());
             System.out.println("CRM : " + getCrm());
             System.out.println("Especialização : " + getEspecializacao());
-            System.out.printf("Custo da Consulta : R$ %.2f\n", getCustoConsulta());
+            System.out.printf("Custo da Consulta : R$ %.2f \n", getCustoConsulta());
             System.out.println("==========================");
+            System.out.println();
     }
 
     //Setters

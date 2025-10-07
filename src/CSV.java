@@ -36,6 +36,17 @@ public class CSV {
 
     }
 
+    public static void CSV_Medicoatualizar(ArrayList<Medico> listamedico){
+        try(FileWriter CSV = new FileWriter("Medicos.csv", false)){
+            for(Medico medico : listamedico){
+                CSV.write(medico.getNome() + ";" + medico.getCpf() + ";" + medico.getCrm() + ";" + medico.getIdade() + ";" + medico.getEspecializacao().name() + ";" + medico.getCustoConsulta() + "\n");
+            }
+        }catch(IOException erro){
+            System.out.println("Erro ao atualizar o arquivo dos Médicos");
+        }
+
+    }
+
     public static void CSV_Consulta(Consultas Consultas) {
         try (FileWriter CSV = new FileWriter("Consultas.csv", true)) {
             CSV.write(Consultas.getPaciente().getCpf() + ";" + Consultas.getMedico().getCrm() + ";" + Consultas.getData().toString() + ";" + Consultas.getMotivo() + "\n");
