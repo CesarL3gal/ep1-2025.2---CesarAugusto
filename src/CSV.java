@@ -55,7 +55,7 @@ public class CSV {
         }
     }
     public static void CSV_ConsultaAtualizar(ArrayList<Consultas> listaConsulta){
-        try (FileWriter CSV = new FileWriter("Internacao.csv", false)) {
+        try (FileWriter CSV = new FileWriter("Consultas.csv", false)) {
             for(Consultas consultas : listaConsulta) {
                 CSV.write(consultas.getPaciente().getCpf() + ";" + consultas.getMedico().getCrm() + ";" + consultas.getData().toString() + ";" + consultas.getMotivo() + "\n");
             }

@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Internacao {
@@ -79,8 +80,9 @@ public class Internacao {
     public void setDataSaida(LocalDateTime dataSaida) {
         this.dataSaida= dataSaida;
     }
+    //@Override
     public void setDataSaida(){
-        this.dataSaida=LocalDateTime.now();
+        this.dataSaida=LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
     public double getCustoTotal() {
         return custoTotal;
@@ -90,7 +92,7 @@ public class Internacao {
         System.out.println("Paciente : " + getPaciente().getNome() + "  ,Plano : " + getPaciente().getPlanoSaude());
         System.out.println("DataEntrada : " + getDataEntrada());
         System.out.println("DataSaida: " + getDataSaida());
-        System.out.printf("Custo com desconto : R$ %.2f\n", getCustoDiario(getPaciente()));
+        System.out.printf("Custo Diario da Internação : R$ %.2f\n", getCustoDiario(getPaciente()));
         System.out.println("Numero do Quarto : " + getQuarto().getNumero());
         System.out.println("==========================");
     }

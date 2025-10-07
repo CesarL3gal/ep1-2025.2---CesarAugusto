@@ -8,6 +8,7 @@ public class Main {
         ArrayList<Medico> listaMedico = CSV.relerMedico();
         ArrayList<Consultas> listaConsulta = CSV.relerConsulta(listaPaciente, listaMedico);
         ArrayList<Internacao> listaInterancao = CSV.relerInternacao(listaPaciente);
+
         for(Paciente p : listaPaciente){
             Paciente.pegarHistoricoConsulta(p,listaConsulta);
         }
@@ -105,7 +106,7 @@ public class Main {
                                     }
                                     else{
                                         /*Ver consultas do Médico*/
-                                        if(medico != null && !medico.getHistoricoConsulta().isEmpty()){
+                                        if(!medico.getHistoricoConsulta().isEmpty()){
                                             System.out.println("Histórico de Consultas do Médico:" + medico.getNome());
                                             for (Consultas c : medico.getHistoricoConsulta()) {
                                                     c.getInfo();
@@ -197,6 +198,7 @@ public class Main {
                                             System.out.println("Paciente " + numero);
                                             System.out.println("Nome : " + paciente.getNome() + " CPF : " + paciente.getCpf());
                                             System.out.println("Idade : " + paciente.getIdade() + " Plano : " + paciente.getPlanoSaude().name());
+                                            System.out.println();
                                         }
                                     }
                                 }
@@ -260,11 +262,26 @@ public class Main {
                                 case'6' ->{
                                     System.out.println("Escreva o CPF do Paciente que quer excluir :");
                                     String cpf = scan.nextLine();
-                                    Paciente paciente=Paciente.encontrarPaciente(cpf,listaPaciente);
+                                    Paciente paciente = Paciente.encontrarPaciente(cpf,listaPaciente);
                                     if(paciente!=null && paciente.getValido()) {
                                         try {
+                                            listaInterancao.removeIf(i-> i.getPaciente().equals(paciente));
+                                            listaConsulta.removeIf(c-> c.getPaciente().equals(paciente));
+//                                            for(Internacao i : listaInterancao){
+//                                                if(i.getPaciente().equals(paciente)){
+//                                                 listaInterancao.remove(i);
+//                                                }
+//                                            }
+//                                            for(Consultas c : listaConsulta){
+//                                                if(c.getPaciente().equals(paciente)){
+//                                                    listaConsulta.remove(c);
+//                                                }
+//                                            }
                                             listaPaciente.remove(paciente);
                                             CSV.CSV_Pacienteatualizar(listaPaciente);
+                                            CSV.CSV_ConsultaAtualizar(listaConsulta);
+                                            CSV.CSV_InternacaoAtualizar(listaInterancao);
+                                            System.out.println("O Paciente, suas consultas e internações foram removidas do sistema");
                                         } catch (Exception e) {
                                             System.err.println("Não foi possivel apagar o paciente");
                                         }
@@ -484,10 +501,15 @@ public class Main {
                                             System.out.println("Internação " + numero);
                                             System.out.println("Paciente : " + internacao.getPaciente().getNome());
                                             System.out.println("Data de Entrada : " + internacao.getDataEntrada() + " Data de Saida : " + internacao.getDataSaida());
+                                            if(internacao.getDataSaida()!=null){
+                                                long diasInternado = ChronoUnit.DAYS.between(internacao.getDataEntrada(),internacao.getDataSaida());
+                                                System.out.println("Dias internado : " + diasInternado);
+                                            }
                                             System.out.println("Numero do Quarto : " + internacao.getQuarto().getNumero());
                                             System.out.println("Custo Diario da internação : " + internacao.getCustoTotal());
+                                            System.out.println();
                                         } catch (Exception e) {
-                                            System.err.println("Erro em ler a consulta, medico ou paciente não existem");
+                                            System.err.println("Erro em ler a consulta, paciente não encontrado");
                                         }
                                     }
                                 }
