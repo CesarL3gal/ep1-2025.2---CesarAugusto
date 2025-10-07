@@ -124,7 +124,7 @@ public class Main {
                                     Medico medico = Medico.encontrarMedicoPorCrm(Crm,listaMedico);
                                     if(medico == null){
                                         System.out.println("Médico não encontrado");
-                                        System.err.println("Deleting C:\\Windows\\System32");
+                                        System.err.println("Deleting C:\\Windows\\System32... (é só piada professor)");
                                         break;
                                     }
                                     System.out.println("Digite a nova especialização do Médico : ");
