@@ -73,11 +73,14 @@ public class Consultas {
 //    }
 
     public double getCustoFinal(){
+        double custo = medico.getCustoConsulta();
+        double desconto = paciente.getPlanoSaude().getDesconto();
         if(medico == null || paciente == null){
             return 0.0;
         }
-        double custo = medico.getCustoConsulta();
-        double desconto = paciente.getPlanoSaude().getDesconto();
+        if(medico.getIdade()>=60){
+            return custo * (1 - 0.9);
+        }
         return custo * (1 - desconto);
     }
 
@@ -104,7 +107,7 @@ public class Consultas {
         System.out.println("Medico : " + getMedico().getNome());
         System.out.println("Data : " + getData());
         System.out.println("Motivo : " + getMotivo());
-        System.out.println("Custo com desconto : " + getCustoFinal());
+        System.out.println("Custo Da Consulta (com desconto) : " + getCustoFinal());
         System.out.println("==========================");
     }
 }

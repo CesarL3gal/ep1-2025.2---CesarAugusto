@@ -57,13 +57,14 @@ public class Internacao {
     }
 
     public static double getCustoDiario(Paciente paciente){
-        if(paciente == null){
-            return 150.0;
-        }
         double custo = 150.0;
         double desconto = paciente.getPlanoSaude().getDesconto();
+        if(paciente.getIdade()>=60){
+            return custo * (1 - 0.9);
+        }
         return custo * (1 - desconto);
     }
+
     //Setters e Getters
     public Paciente getPaciente(){
         return paciente;
@@ -90,10 +91,14 @@ public class Internacao {
     public void getInfo(){
         System.out.println("==========================");
         System.out.println("Paciente : " + getPaciente().getNome() + "  ,Plano : " + getPaciente().getPlanoSaude());
-        System.out.println("DataEntrada : " + getDataEntrada());
-        System.out.println("DataSaida: " + getDataSaida());
+        System.out.println("DataEntrada : " + getDataEntrada() + " ,DataSaida: " + getDataSaida());
+        if(getDataSaida()!=null){
+            long diasInternado = ChronoUnit.DAYS.between(getDataEntrada(),getDataSaida());
+            System.out.println("Dias internado : " + diasInternado);
+        }
         System.out.printf("Custo Diario da Internação : R$ %.2f\n", getCustoDiario(getPaciente()));
         System.out.println("Numero do Quarto : " + getQuarto().getNumero());
         System.out.println("==========================");
+        System.out.println();
     }
 }

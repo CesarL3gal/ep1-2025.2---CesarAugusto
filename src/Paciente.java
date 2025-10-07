@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 
-public class Paciente{
-    private String nome;
-    private int idade;
-    private String cpf;
+public class Paciente extends Pessoa{
     private PlanoDeSaude planoSaude;
     private boolean valido;
     private ArrayList<Consultas> historicoConsulta = new ArrayList<>();
@@ -18,9 +15,7 @@ public class Paciente{
     }
 
     public Paciente(String nome, int idade, String cpf,  PlanoDeSaude planoSaude ){
-            this.nome = nome;
-            this.idade = idade;
-            this.cpf = cpf;
+            super(nome,idade,cpf);
             this.planoSaude = planoSaude;
             this.valido=true;
     }
@@ -110,36 +105,18 @@ public class Paciente{
             System.out.println("Idade : " + getIdade());
             System.out.println("CPF : " + getCpf());
             System.out.println("Plano De Saude : " + getPlanoSaude());
+            System.out.println("Número de consultas : " + getHistoricoConsulta().toString().length());
             System.out.println("==========================");
         }
 
 
 
 
-    public void setNome(String nome){
-        this.nome=nome;
-    }
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
     public void setValido(boolean valido) {
         this.valido = valido;
     }
-
     public void setPlanoSaude(PlanoDeSaude planoSaude){
         this.planoSaude=planoSaude;
-    }
-    public int getIdade(){
-        return idade;
-    }
-    public String getCpf() {
-        return cpf;
-    }
-    public String getNome(){
-        return nome;
     }
     public boolean getValido(){
         return this.valido;

@@ -1,31 +1,28 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Medico {
-    private String nome;
-    private int idade;
-    private String cpf;
+public class Medico extends Pessoa {
     private String crm;
     private Especialidade especializacao;
     private double custoConsulta;
     private boolean valido;
     private ArrayList<Consultas> HistoricoConsulta = new ArrayList<>();
 
-        //Construtores
-        public Medico(){
-            this.nome = "";
-            this.idade = 0;
-            this.cpf = "";
-            this.crm = "";
-            this.especializacao = null;
-            this.custoConsulta = 0.0;
-            this.valido = false;
-        }
+    //Construtores
+    public Medico(){
+        this.nome="";
+        this.idade=0;
+        this.cpf="";
+        this.crm = "";
+        this.especializacao = null;
+        this.custoConsulta = 0.0;
+        this.valido = false;
+    }
 
         public Medico(String nome, int idade, String cpf,String crm, Especialidade especializacao, double custoConsulta ){
-            this.nome = nome;
+            super(nome,idade,cpf);
+
             this.idade = idade;
-            this.cpf = cpf;
             this.crm = crm;
             this.especializacao = especializacao;
             this.custoConsulta = custoConsulta;
@@ -116,21 +113,12 @@ public class Medico {
             System.out.println("CRM : " + getCrm());
             System.out.println("Especialização : " + getEspecializacao());
             System.out.printf("Custo da Consulta : R$ %.2f \n", getCustoConsulta());
+            System.out.println("Números de Consultas : " + getHistoricoConsulta().toArray().length);
             System.out.println("==========================");
-            System.out.println();
     }
 
     //Setters
-    public void setNome(String nome){
-        this.nome=nome;
-    }
     public void setCrm(String crm){this.crm=crm;}
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
     public void setCustoConsulta(double custoConsultaconsulta){
             this.custoConsulta=custoConsultaconsulta;
     }
@@ -139,17 +127,8 @@ public class Medico {
     public boolean getValido(){
             return this.valido;
     }
-    public int getIdade(){
-        return this.idade;
-    }
     public String getCrm(){return this.crm;}
     public Especialidade getEspecializacao(){return this.especializacao;}
-    public String getCpf() {
-        return this.cpf;
-    }
-    public String getNome(){
-        return this.nome;
-    }
     public double getCustoConsulta(){
             return this.custoConsulta;
     }
