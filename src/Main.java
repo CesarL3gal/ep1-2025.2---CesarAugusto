@@ -241,7 +241,7 @@ public class Main {
                                     if(paciente==null){
                                         System.out.println("Paciente não encontrado");
                                         break;
-                                    }\
+                                    }
                                     System.out.println("Plano Atual: " + paciente.getPlanoSaude().name());
                                     System.out.println("Digite o novo plano : MILITAR, CIVIL, NENHUM ,PREMIUM");
                                     String novoPlano = scan.nextLine().toUpperCase();
@@ -260,7 +260,18 @@ public class Main {
                                 case'6' ->{
                                     System.out.println("Escreva o CPF do Paciente que quer excluir :");
                                     String cpf = scan.nextLine();
-                                    paciente=Paciente.encontrarPaciente(cpf,listaPaciente);
+                                    Paciente paciente=Paciente.encontrarPaciente(cpf,listaPaciente);
+                                    if(paciente!=null && paciente.getValido()) {
+                                        try {
+                                            listaPaciente.remove(paciente);
+                                            CSV.CSV_Pacienteatualizar(listaPaciente);
+                                        } catch (Exception e) {
+                                            System.err.println("Não foi possivel apagar o paciente");
+                                        }
+                                    }
+                                    else{
+                                        System.out.println("Paciente não encontrado");
+                                    }
                                 }
                                 case 'V' -> {
                                     break;
