@@ -20,14 +20,20 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 ## Instruções para Compilação e Execução
 
 1. **Compilação:**  
-   Main.java
+   javac Main.java
 
 2. **Execução:**  
-   java Main
+   Main.java
 
 3. **Estrutura de Pastas:**  
-   Pasta principal é a src e as packages também estão dentro dela,
-a Pasta pessoas contem Medicos e Paciente, e as Pastas Internações e Consultas cóntem ,respectivamente , Internações e Consultas
+   ep1-2025.2---CesarAugusto/ 
+
+
+    ├── src/ Main
+         ├── Consultas/ Classe Consultas
+         ├── Pessoas/ Apresenta outra pasta com Médicos e Pacientes, que são subclasses da Pessoas
+         ├── Internação/ Classes Internação e Quartos
+         └── Função/ Ler e escrever CSV
 
 3. **Versão do JAVA utilizada:**  
    [`java 21`]
@@ -36,7 +42,8 @@ a Pasta pessoas contem Medicos e Paciente, e as Pastas Internações e Consultas
 
 ## Vídeo de Demonstração
 
-- [Inserir o link para o vídeo no YouTube/Drive aqui]
+- https://www.youtube.com/watch?v=jr3IoXPcqnA
+- O vídeo tem 6 minutos, se o tempo for estritamente 5 minutos, vê até o minuto 5
 
 ---
 
@@ -60,9 +67,9 @@ a Pasta pessoas contem Medicos e Paciente, e as Pastas Internações e Consultas
 
 ## Observações (Extras ou Dificuldades)
 
-- Esse trabalho serviu bastante pra aprendizado da matéria, quando comecei tive enorme dificuldade com o projeto por não entender o paradigma de OO, ademais da pra citar diversas outras dificuldades que tive, muitas funções eu não conhecia e a relação de objetos, manter o arquivo csv atualizado tmb foram dificeis
-- Um ponto que realmente me pegou bastante foi com os ArrayLists de Objetos e como manter elas e o CSV iguais, além disso, algumas funções de Data da Internação, salvar os quartos e datas foram bem dificeis.
-- Para solucionar o dos quartos criei uma classe quarto para garantir que salve bem a informação de ocupado ou não.
+- Esse trabalho serviu bastante pra aprendizado da matéria, quando comecei ter enorme dificuldade com o projeto por não entender o paradigma de OO, ademais da pra citar diversas outras dificuldades que tive, muitas funções eu não conhecia e a relação de objetos, manter o arquivo csv atualizado tmb foram dificeis
+- Um ponto que realmente me pegou bastante foi com os ArrayLists de Objetos e como manter elas e o CSV iguais, além disso, algumas funções de Data da Internação, salvar os quartos e datas perfeitamente demandou bastante tempo, para solucionar o dos quartos criei uma classe quarto para garantir que salve bem a informação de ocupado ou não
+-  
 ---
 
 ## Contato
