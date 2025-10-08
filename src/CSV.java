@@ -125,7 +125,7 @@ public class CSV {
             System.out.println("Não achou o arquivo do Paciente");
             try {
                 arquivo.createNewFile();
-                System.out.println("Criando arquivo");
+                System.out.println("Criando arquivo...");
             } catch (IOException ex) {
                 System.out.println("Falhou ao criar o arquivo");
             }
@@ -151,7 +151,7 @@ public class CSV {
             System.out.println("Não achou o arquivo do Médico");
             try {
                 arquivo.createNewFile();
-                System.out.println("Criando arquivo");
+                System.out.println("Criando arquivo...");
             } catch (IOException ex) {
                 System.out.println("Falhou ao criar o arquivo");
             }
@@ -178,7 +178,7 @@ public class CSV {
             System.out.println("Não achou o arquivo da Consulta");
             try {
                 arquivo.createNewFile();
-                System.out.println("Criando arquivo");
+                System.out.println("Criando arquivo...");
             } catch (IOException ex) {
                 System.out.println("Falhou ao criar o arquivo");
             }
@@ -203,7 +203,7 @@ public class CSV {
             System.out.println("Não achou o arquivo da Internação");
             try {
                 arquivo.createNewFile();
-                System.out.println("Criando arquivo");
+                System.out.println("Criando arquivo...");
             } catch (IOException ex) {
                 System.out.println("Falhou ao criar o arquivo");
             }
