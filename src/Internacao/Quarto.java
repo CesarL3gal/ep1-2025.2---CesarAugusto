@@ -1,3 +1,5 @@
+package Internacao;
+
 public class Quarto {
     private int numero;
     private boolean ocupado;

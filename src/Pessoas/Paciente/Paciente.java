@@ -1,6 +1,12 @@
+package Pessoas.Paciente;
+
+import Consultas.Consultas;
+import Internacao.Internacao;
+import Pessoas.Pessoa;
+
 import java.util.ArrayList;
 
-public class Paciente extends Pessoa{
+public class Paciente extends Pessoa {
     private PlanoDeSaude planoSaude;
     private boolean valido;
     private ArrayList<Consultas> historicoConsulta = new ArrayList<>();
@@ -40,7 +46,7 @@ public class Paciente extends Pessoa{
             this.nome="INVALIDO";
             this.cpf="";
             this.idade=0;
-            this.planoSaude=PlanoDeSaude.NENHUM;
+            this.planoSaude= PlanoDeSaude.NENHUM;
         }
     }
 
@@ -138,9 +144,9 @@ public class Paciente extends Pessoa{
 //            if(c.paciente.getCpf().trim().equals(cpf)){
 //        for(Consultas c: consultasTotais){
 //        ArrayList<Consultas> consultas = new ArrayList<>();
-//        ArrayList<Consultas> consultasTotais = CSV.relerConsulta();
+//        ArrayList<Consultas> consultasTotais = Funcao.CSV.relerConsulta();
 //    public ArrayList<Consultas> getConsultas(String cpf){
-//Ordem do CSV Consulta : CPF do Paciente; CPF do Medico; Data; Hora; Motivo
+//Ordem do Funcao.CSV Consulta : CPF do Paciente; CPF do Medico; Data; Hora; Motivo
 //    public void setAll(String info){
 //            String[] partes= info.split(";");
 //            this.nome = partes[0];

@@ -1,3 +1,5 @@
+package Pessoas.Paciente;
+
 public enum PlanoDeSaude {
     MILITAR(1.0),
     CIVIL(0.2),

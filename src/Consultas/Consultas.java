@@ -1,3 +1,7 @@
+package Consultas;
+import Pessoas.Medico.Medico;
+import Pessoas.Paciente.Paciente;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -9,7 +13,7 @@ public class Consultas {
    private LocalDateTime data;
    private String motivo;
 
-    public Consultas(Paciente paciente,Medico medico, LocalDateTime data, String motivo){
+    public Consultas(Paciente paciente, Medico medico, LocalDateTime data, String motivo){
         this.paciente = paciente;
         this.medico = medico;
         this.data = data; //Formato aaaa-mm-ddThh:mm
@@ -31,7 +35,7 @@ public class Consultas {
             System.err.println("Erro na formatação da data");
         }
     }
-    //Construtor CSV
+    //Construtor Funcao.CSV
     //cpf paciente, crm medico, data e hora, motivo
     public Consultas(String info, ArrayList<Paciente> listaPaciente, ArrayList<Medico> listaMedicos){
         try {
@@ -53,7 +57,7 @@ public class Consultas {
     }
 
 //    //Compara CPF com todos os termos do Array List
-//    //Ordem do CSV: Paciente; CPF do Paciente; Medico; CRM do Medico; Data; Hora; Motivo
+//    //Ordem do Funcao.CSV: Paciente; CPF do Paciente; Medico; CRM do Medico; Data; Hora; Motivo
 //    public boolean compCpf(String cpf, ArrayList<String> lista){
 //        for (String s : lista) {
 //            String[] partes = s.split(";");

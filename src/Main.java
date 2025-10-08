@@ -1,7 +1,16 @@
+import Consultas.Consultas;
+import Funcao.CSV;
+import Internacao.Internacao;
+import Pessoas.Medico.Especialidade;
+import Pessoas.Medico.Medico;
+import Pessoas.Paciente.Paciente;
+import Pessoas.Paciente.PlanoDeSaude;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 //Aluno : César Augusto Pereira Silva
 //Matricula : 251035031
 //Turma : 06
@@ -45,10 +54,10 @@ public class Main {
                             System.out.println("2: Ver Médicos Cadastrados :");
                             System.out.println("3: Pesquisar medico por CRM :");
                             System.out.println("4: Ver Consultas Agendadas com o Médico :");
-                            System.out.println("5: Mudar Especialização : ");
-                            System.out.println("6: Excluir Médico do Sistema : ");
+                            System.out.println("5: Pesquisar médico por nome : ");
+                            System.out.println("6: Mudar Especialização : ");
                             System.out.println("7: Mudar o Preço da Consulta : ");
-                            System.out.println("8: Pesquisar médico por nome : ");
+                            System.out.println("8: Excluir Médico do Sistema : ");
                             System.out.println("V: para voltar");
                             System.out.println("==========================");
                             entrada2 = scan.next().toUpperCase().charAt(0);
@@ -128,8 +137,24 @@ public class Main {
                                         }
                                     }
                                 }
-//                                Mudar Especialização
+                                //Pesquisar Médico por nome
                                 case '5'->{
+                                    System.out.println("Escreva o nome do Médico:");
+                                    String nome = scan.nextLine();
+                                    boolean achou=false;
+                                    for(Medico m :listaMedico){
+                                        if(m.getNome().toUpperCase().trim().equals(nome.toUpperCase().trim()) && m.getValido()){
+                                            m.getInfo();
+                                            achou=true;
+                                        }
+                                    }
+                                    if(!achou){
+                                        System.out.println("Médico não encontrado");
+                                    }
+
+                                }
+//                                Mudar Especialização
+                                case '6'->{
                                     System.out.println("Digite o CRM do Médico :");
                                     String Crm = scan.nextLine();
                                     Medico medico = Medico.encontrarMedicoPorCrm(Crm,listaMedico);
@@ -154,26 +179,6 @@ public class Main {
                                     medico.getInfo();
 
                                 }
-//                                    Excluir Médico do Sistema
-                                case '6'->{
-                                    System.out.println("Escreva o CRM do Médico");
-                                    String crm =scan.nextLine();
-                                    Medico medico = Medico.encontrarMedicoPorCrm(crm,listaMedico);
-                                    if(medico!=null && medico.getValido()){
-                                        try{
-                                            listaConsulta.removeIf(i-> i.getMedico().equals(medico));
-                                            listaMedico.remove(medico);
-                                            CSV.CSV_Medicoatualizar(listaMedico);
-                                            CSV.CSV_ConsultaAtualizar(listaConsulta);
-                                            System.out.println("O medico e suas consultas foram excluidas do sistema");
-                                        } catch (Exception e) {
-                                            System.err.println("Não foi possivel apagar o médico");
-                                        }
-                                    }
-                                    else{
-                                        System.out.println("Médico não encontrado");
-                                    }
-                                }
                                 //Mudar o Preço por consulta do médico
                                 case '7'->{
                                     System.out.println("Escreva o CRM do médico");
@@ -191,18 +196,23 @@ public class Main {
                                     CSV.CSV_Medicoatualizar(listaMedico);
                                     medico.getInfo();
                                 }
-                                //Pesquisar Médico por nome
+//                                    Excluir Médico do Sistema
                                 case '8'->{
-                                    System.out.println("Escreva o nome do Médico:");
-                                    String nome = scan.nextLine();
-                                    boolean achou=false;
-                                    for(Medico m :listaMedico){
-                                        if(m.getNome().toUpperCase().trim().equals(nome.toUpperCase().trim()) && m.getValido()){
-                                            m.getInfo();
-                                            achou=true;
+                                    System.out.println("Escreva o CRM do Médico");
+                                    String crm =scan.nextLine();
+                                    Medico medico = Medico.encontrarMedicoPorCrm(crm,listaMedico);
+                                    if(medico!=null && medico.getValido()){
+                                        try{
+                                            listaConsulta.removeIf(i-> i.getMedico().equals(medico));
+                                            listaMedico.remove(medico);
+                                            CSV.CSV_Medicoatualizar(listaMedico);
+                                            CSV.CSV_ConsultaAtualizar(listaConsulta);
+                                            System.out.println("O medico e suas consultas foram excluidas do sistema");
+                                        } catch (Exception e) {
+                                            System.err.println("Não foi possivel apagar o médico");
                                         }
                                     }
-                                    if(!achou){
+                                    else{
                                         System.out.println("Médico não encontrado");
                                     }
                                 }
@@ -351,6 +361,7 @@ public class Main {
                                         System.out.println("Paciente não encontrado");
                                     }
                                 }
+                                //Ver historico de Internações
                                 case '7'->{
                                     System.out.println("Escreva o CPF do Paciente");
                                     String cpf = scan.nextLine();
@@ -412,6 +423,7 @@ public class Main {
                                         break;
                                     }
                                     System.out.println("Escreva a data e hora da consulta no formato Ano-Mes-DiaTHH:MM (ex: 2025-06-10T12:00)");
+                                    System.out.println("Um médico não terá duas consultas ocorrendo em menos 30 minutos");
                                     String data = scan.nextLine();
                                     LocalDateTime dataFinal;
                                     try {
@@ -436,7 +448,7 @@ public class Main {
                                         consulta.getInfo();
                                     }
                                     else {
-                                        System.out.println("Cancelando o Cadastro por Horário Conflitante");
+                                        System.out.println("Cancelando o Cadastro por horário conflitante do médico");
                                     }
                                 }
 
@@ -574,7 +586,7 @@ public class Main {
                                     try {
                                         Internacao internacao = new Internacao(paciente, dataEntrada, null, custo, quarto);
 
-                                        //Garantir que o ArrayList e CSV combinem
+                                        //Garantir que o ArrayList e Funcao.CSV combinem
                                         listaInterancao.add(internacao);
                                         paciente.adcionarInternacaoHistorico(internacao);
 

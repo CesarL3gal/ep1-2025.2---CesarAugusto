@@ -1,3 +1,5 @@
+package Pessoas.Medico;
+
 public enum Especialidade {
     Cardiologia("Cardiologia"),
     Pediatra("Pediatra"),

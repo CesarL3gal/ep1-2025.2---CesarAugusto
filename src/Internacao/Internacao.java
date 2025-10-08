@@ -1,3 +1,8 @@
+package Internacao;
+
+import Pessoas.Paciente.Paciente;
+import Internacao.Quarto;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -10,7 +15,7 @@ public class Internacao {
      private double custoTotal;
      private Quarto quarto;
 
-    // CPF;DataEntrada;DataSaida;Quarto;Custo
+    // CPF;DataEntrada;DataSaida;Internacao.Quarto;Custo
     public Internacao(Paciente paciente, LocalDateTime entrada, LocalDateTime saida, double custo, int quarto){
         this.paciente=paciente;
         this.dataEntrada=entrada;
@@ -18,10 +23,10 @@ public class Internacao {
         this.custoTotal=custo;
         this.quarto = new Quarto(quarto);
     }
-    //Criar uma internação pelo CSV
-    // CPF;DataEntrada;DataSaida;Quarto;Custo
+    //Criar uma internação pelo Funcao.CSV
+    // CPF;DataEntrada;DataSaida;Internacao.Quarto;Custo
     public Internacao(String info, ArrayList<Paciente> listaPaciente){
-        // Formato da info Paciente,DataEntrada,DataSaida,Custo,Quarto
+        // Formato da info ,DataEntrada,DataSaida,Custo,Internacao.Quarto
         String[] partes = info.split(";");
         try {
         this.paciente = Paciente.encontrarPaciente(partes[0].trim(),listaPaciente);
@@ -51,7 +56,7 @@ public class Internacao {
            System.err.println("Erro na formatação da Data da internação");
        }
        catch (ArrayIndexOutOfBoundsException e){
-           System.err.println("Erro na formatação do CSV");
+           System.err.println("Erro na formatação do Funcao.CSV");
        }
        catch (Exception e) {
             System.err.println("Algo deu errado na criação da Internação");

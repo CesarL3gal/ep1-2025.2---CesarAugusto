@@ -1,3 +1,8 @@
+package Pessoas;
+
+import Pessoas.Medico.Medico;
+import Pessoas.Paciente.Paciente;
+
 import java.util.ArrayList;
 
 public class Pessoa {

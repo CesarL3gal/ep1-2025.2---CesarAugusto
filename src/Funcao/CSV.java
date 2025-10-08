@@ -1,3 +1,11 @@
+package Funcao;
+
+import Consultas.Consultas;
+import Internacao.Internacao;
+import Pessoas.Medico.Medico;
+import Pessoas.Paciente.Paciente;
+import Internacao.Quarto;
+
 import java.io.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -65,7 +73,7 @@ public class CSV {
     }
 
 
-    // CPF;DataEntrada;DataSaida;Quarto;Custo
+    // CPF;DataEntrada;DataSaida;Internacao.Quarto;Custo
     public static void CSV_Internacao(Internacao internacao) {
         String dataEntrada = internacao.getDataEntrada().toString();
         String dataSaida;
@@ -108,8 +116,8 @@ public class CSV {
     //Area das Leituras
 
 
-// Retorna uma leitura de um arquivo CSV como ArrayList
-//Reler CSV dos Paceintes
+// Retorna uma leitura de um arquivo Funcao.CSV como ArrayList
+//Reler Funcao.CSV dos Paceintes
     public static ArrayList<Paciente> relerPaciente() {
         ArrayList<Paciente> lista = new ArrayList<>();
         File arquivo = new File("Pacientes.csv");
@@ -135,7 +143,7 @@ public class CSV {
         return lista;
     }
 
-    //Reler CSV dos Médicos
+    //Reler Funcao.CSV dos Médicos
     public static ArrayList<Medico> relerMedico() {
         ArrayList<Medico> lista = new ArrayList<>();
         File arquivo = new File("Medicos.csv");
@@ -162,7 +170,7 @@ public class CSV {
     }
 
 
-    //Reler CSV das Consultas
+    //Reler Funcao.CSV das Consultas
     public static ArrayList<Consultas> relerConsulta(ArrayList<Paciente> paciente, ArrayList<Medico> medico) {
         ArrayList<Consultas> lista = new ArrayList<>();
         File arquivo = new File("Consultas.csv");

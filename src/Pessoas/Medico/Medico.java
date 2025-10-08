@@ -1,3 +1,9 @@
+package Pessoas.Medico;
+
+import Consultas.Consultas;
+import Pessoas.Pessoa;
+import Pessoas.Medico.Especialidade;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -19,7 +25,7 @@ public class Medico extends Pessoa {
         this.valido = false;
     }
 
-        public Medico(String nome, int idade, String cpf,String crm, Especialidade especializacao, double custoConsulta ){
+        public Medico(String nome, int idade, String cpf, String crm, Especialidade especializacao, double custoConsulta ){
             super(nome,idade,cpf);
             this.idade = idade;
             this.crm = crm;
