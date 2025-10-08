@@ -105,7 +105,7 @@ public class Paciente extends Pessoa{
             System.out.println("Idade : " + getIdade());
             System.out.println("CPF : " + getCpf());
             System.out.println("Plano De Saude : " + getPlanoSaude());
-            System.out.println("Número de consultas : " + getHistoricoConsulta().toString().length());
+            System.out.println("Número de consultas : " + getHistoricoConsulta().size());
             System.out.println("==========================");
         }
 

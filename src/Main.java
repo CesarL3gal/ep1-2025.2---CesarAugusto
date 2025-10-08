@@ -2,6 +2,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
+//Aluno : César Augusto Pereira Silva
+//Matricula : 251035031
+//Turma : 06
 public class Main {
     public static void main(String[] args) {
         ArrayList<Paciente> listaPaciente = CSV.relerPaciente();
@@ -43,6 +46,7 @@ public class Main {
                             System.out.println("4: Ver Consultas Agendadas com o Médico :");
                             System.out.println("5: Mudar Especialização : ");
                             System.out.println("6: Excluir Médico do Sistema : ");
+                            System.out.println("7: Mudar o Preço da Consulta");
                             System.out.println("V: para voltar");
                             System.out.println("==========================");
                             entrada2 = scan.next().toUpperCase().charAt(0);
@@ -55,14 +59,17 @@ public class Main {
                                     System.out.println("Especializações disponíveis : Cardiologia, Pediatra, Ortopedia, Clinica, Neurologia, Dermatologia");
                                     String info = scan.nextLine();
                                     Medico medico = new Medico(info);
-                                    if(Medico.encontrarMedicoPorCrm(medico.getCrm(),listaMedico) == null && medico.getValido() && !Medico.CompararCpf(medico.cpf, listaPaciente,listaMedico)){
+                                    if(Medico.encontrarMedicoPorCrm(medico.getCrm(),listaMedico) == null && medico.getValido() && !Medico.CompararCpf(medico.getCpf(), listaPaciente,listaMedico)){
                                         CSV.CSV_Medico(medico);
                                         listaMedico.add(medico);
                                         System.out.println("Medico Cadastrado com Sucesso!");
                                         medico.getInfo();
                                     }
+                                    else if(Medico.encontrarMedicoPorCrm(medico.getCrm(),listaMedico) != null && medico.getValido()){
+                                        System.out.println("Não foi possivel registrar, CRM já está sendo utilizado ou formatação invalida");
+                                    }
                                     else{
-                                        System.out.println("Não foi possivel registrar, CRM ou CPF já está sendo utilizado ou formatação invalida");
+                                        System.out.println("Não foi possivel registrar, CPF já está sendo utilizado ou formatação invalida");
                                     }
                                 }
 //                                Ver Médicos Cadastrados
@@ -94,7 +101,7 @@ public class Main {
                                         medico.getInfo();
                                     }
                                     else{
-                                        System.out.println("Crm não encontrado");
+                                        System.out.println("Médico não encontrado");
                                     }
                                 }
 //                                Ver Consultas Agendadas com o Médico
@@ -126,16 +133,11 @@ public class Main {
                                     Medico medico = Medico.encontrarMedicoPorCrm(Crm,listaMedico);
                                     if(medico == null){
                                         System.out.println("Médico não encontrado");
-                                        System.err.println("Deleting C:\\Windows\\System32...");
-                                        try {
-                                            Thread.sleep(2000);
-                                            System.err.println("É só uma piada professor");
-                                        } catch (InterruptedException e) {
-                                            throw new RuntimeException(e);
-                                        }
                                         break;
                                     }
+                                    System.out.println("Médico encontrado");
                                     System.out.println("Digite a nova especialização do Médico : ");
+                                    System.out.println("Especialização atual : " + medico.getEspecializacao().name());
                                     System.out.println("Especializações disponíveis : Cardiologia, Pediatra, Ortopedia, Clinica, Neurologia, Dermatologia");
                                     String Especializacao = scan.nextLine();
                                     Especialidade especialidade;
@@ -169,6 +171,23 @@ public class Main {
                                     else{
                                         System.out.println("Médico não encontrado");
                                     }
+                                }
+                                //Mudar o Preço por consulta do médico
+                                case '7'->{
+                                    System.out.println("Escreva o CRM do médico");
+                                    String Crm = scan.nextLine();
+                                    Medico medico = Medico.encontrarMedicoPorCrm(Crm,listaMedico);
+                                    if (medico == null) {
+                                        System.out.println("Médico não encontrado");
+                                        break;
+                                    }
+                                    System.out.println("Escreva o novo preço do Médico : Exemplo : 150,0 ");
+                                    System.out.println("Preço Atual : " + medico.getCustoConsulta());
+                                    double preco = scan.nextDouble();
+                                    scan.nextLine();
+                                    medico.setCustoConsulta(preco);
+                                    CSV.CSV_Medicoatualizar(listaMedico);
+                                    medico.getInfo();
                                 }
                                 case 'V' -> {
                                     break;
@@ -337,7 +356,8 @@ public class Main {
                             scan.nextLine();
 
                             switch (entrada2) {
-                                case '1' -> { // Cadastrar consulas
+                                // Cadastrar consultas
+                                case '1' -> {
                                     System.out.println("Escreva o CPF do paciente:");
                                     String Cpf = scan.nextLine();
                                     Paciente paciente = Paciente.encontrarPaciente(Cpf,listaPaciente);
@@ -384,8 +404,8 @@ public class Main {
                                 }
 
 
-
-                                case '2' ->{//Ver todas as consultas
+                                //Ver todas as consultas
+                                case '2' ->{
                                    if(listaConsulta.isEmpty()){
                                        System.out.println("Nenhuma consulta cadastrada");
                                    }
@@ -405,7 +425,7 @@ public class Main {
                                    }
                                 }
 
-
+                                //Desmarcar Consultas (excluir)
                                 case '3'->{ //Desmarcar Consulta
                                     System.out.println("Digite o cpf do paciente");
                                     String cpf = scan.nextLine();
@@ -415,16 +435,16 @@ public class Main {
                                         break;
                                     }
                                     if(paciente.getHistoricoConsulta()!=null && !paciente.getHistoricoConsulta().isEmpty()) {
-                                        System.out.println("Dias que o Paciente " + paciente.getNome());
+                                        System.out.println("Paciente : " + paciente.getNome());
                                         for (Consultas c : paciente.getHistoricoConsulta()) {
-                                            System.out.println("Datas que o paciente tem consulta : " + c.getData());
+                                            System.out.println("Data que o paciente tem consulta : " + c.getData());
                                         }
                                     }
                                     else{
                                         System.out.println("Nenhum histórico de consultas encontrados para esse paciente");
                                         break;
                                     }
-                                    System.out.println("Digite a data da consulta no formato (aaaa-mm-ddThh:mm)");
+                                    System.out.println("Digite a data de uma consulta no formato (aaaa-mm-ddThh:mm)");
                                     String dataCancela = scan.nextLine();
 
                                     Consultas consulta = null;

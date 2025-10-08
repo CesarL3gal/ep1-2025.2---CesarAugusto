@@ -108,11 +108,11 @@ public class CSV {
     //Area das Leituras
 
 
-    // Resetar o Array List, usar toda vez que faz uma modificação, pra garantir que fique em tempo real
 // Retorna uma leitura de um arquivo CSV como ArrayList
 //Reler CSV dos Paceintes
     public static ArrayList<Paciente> relerPaciente() {
         ArrayList<Paciente> lista = new ArrayList<>();
+        File arquivo = new File("Pacientes.csv");
         try {
             BufferedReader lerPaciente = new BufferedReader(new FileReader("Pacientes.csv"));
             String linha;
@@ -122,7 +122,13 @@ public class CSV {
             }
             return lista;
         } catch (FileNotFoundException e) {
-            System.out.println("Não achou o arquivos");
+            System.out.println("Não achou o arquivo do Paciente");
+            try {
+                arquivo.createNewFile();
+                System.out.println("Criando arquivo");
+            } catch (IOException ex) {
+                System.out.println("Falhou ao criar o arquivo");
+            }
         } catch (IOException e) {
             System.out.println("Deu erro na leitura rapaiz");
         }
@@ -132,6 +138,7 @@ public class CSV {
     //Reler CSV dos Médicos
     public static ArrayList<Medico> relerMedico() {
         ArrayList<Medico> lista = new ArrayList<>();
+        File arquivo = new File("Medicos.csv");
         try {
             BufferedReader lerMedico = new BufferedReader(new FileReader("Medicos.csv"));
             String linha;
@@ -141,7 +148,13 @@ public class CSV {
             }
             return lista;
         } catch (FileNotFoundException e) {
-            System.out.println("Não achou o arquivos");
+            System.out.println("Não achou o arquivo do Médico");
+            try {
+                arquivo.createNewFile();
+                System.out.println("Criando arquivo");
+            } catch (IOException ex) {
+                System.out.println("Falhou ao criar o arquivo");
+            }
         } catch (IOException e) {
             System.out.println("Deu erro na leitura rapaiz");
         }
@@ -152,8 +165,8 @@ public class CSV {
     //Reler CSV das Consultas
     public static ArrayList<Consultas> relerConsulta(ArrayList<Paciente> paciente, ArrayList<Medico> medico) {
         ArrayList<Consultas> lista = new ArrayList<>();
+        File arquivo = new File("Consultas.csv");
         try {
-
             BufferedReader lerConsulta = new BufferedReader(new FileReader("Consultas.csv"));
             String linha;
             while ((linha = lerConsulta.readLine()) != null) {
@@ -162,7 +175,13 @@ public class CSV {
             }
             return lista;
         } catch (FileNotFoundException e) {
-            System.out.println("Não achou o arquivos");
+            System.out.println("Não achou o arquivo da Consulta");
+            try {
+                arquivo.createNewFile();
+                System.out.println("Criando arquivo");
+            } catch (IOException ex) {
+                System.out.println("Falhou ao criar o arquivo");
+            }
         } catch (IOException e) {
             System.out.println("Deu erro na leitura rapaiz");
         }
@@ -171,6 +190,7 @@ public class CSV {
 
     public static ArrayList<Internacao> relerInternacao(ArrayList<Paciente> paciente) {
         ArrayList<Internacao> lista = new ArrayList<>();
+        File arquivo = new File("Internacao.csv");
         try {
             BufferedReader lerInternacao = new BufferedReader(new FileReader("Internacao.csv"));
             String linha;
@@ -180,7 +200,13 @@ public class CSV {
             }
             return lista;
         } catch (FileNotFoundException e) {
-            System.out.println("Não achou o arquivos");
+            System.out.println("Não achou o arquivo da Internação");
+            try {
+                arquivo.createNewFile();
+                System.out.println("Criando arquivo");
+            } catch (IOException ex) {
+                System.out.println("Falhou ao criar o arquivo");
+            }
         } catch (IOException e) {
             System.out.println("Deu erro na leitura rapaiz");
         }
