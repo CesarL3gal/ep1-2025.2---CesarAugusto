@@ -21,7 +21,6 @@ public class Medico extends Pessoa {
 
         public Medico(String nome, int idade, String cpf,String crm, Especialidade especializacao, double custoConsulta ){
             super(nome,idade,cpf);
-
             this.idade = idade;
             this.crm = crm;
             this.especializacao = especializacao;
@@ -113,7 +112,7 @@ public class Medico extends Pessoa {
             System.out.println("CRM : " + getCrm());
             System.out.println("Especialização : " + getEspecializacao());
             System.out.printf("Custo da Consulta : R$ %.2f \n", getCustoConsulta());
-            System.out.println("Números de Consultas : " + getHistoricoConsulta().toArray().length);
+            System.out.println("Números de Consultas : " + getHistoricoConsulta().size());
             System.out.println("==========================");
     }
 

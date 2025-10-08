@@ -48,14 +48,14 @@ public class Paciente extends Pessoa{
 
 
     // Funções
-    public static String encontrarPessoa(String cpf, ArrayList<Paciente> lista){
-        for (Paciente s : lista) {
-            if (s.getCpf().trim().equals(cpf)) {
-                return s.toString();
-            }
-        }
-        return null;
-    }
+//    public static String encontrarPessoa(String cpf, ArrayList<Paciente> lista){
+//        for (Paciente s : lista) {
+//            if (s.getCpf().trim().equals(cpf)) {
+//                return s.toString();
+//            }
+//        }
+//        return null;
+//    }
 
     public static Paciente encontrarPaciente(String cpf, ArrayList<Paciente> lista){
         for (Paciente s : lista) {
@@ -83,6 +83,15 @@ public class Paciente extends Pessoa{
     }
     public ArrayList<Consultas> getHistoricoConsulta(){
         return this.historicoConsulta;
+    }
+
+    public static Paciente pegarHistoricoInternacao(Paciente paciente, ArrayList<Internacao> listaInternacao){
+        for(Internacao i : listaInternacao){
+            if(paciente!=null && i.getPaciente()!=null && paciente.getCpf().trim().equals(i.getPaciente().getCpf().trim())){
+                paciente.adcionarInternacaoHistorico(i);
+            }
+        }
+        return paciente;
     }
 
     public void adcionarInternacaoHistorico(Internacao internacao){

@@ -14,6 +14,7 @@ public class Main {
 
         for(Paciente p : listaPaciente){
             Paciente.pegarHistoricoConsulta(p,listaConsulta);
+            Paciente.pegarHistoricoInternacao(p,listaInterancao);
         }
         for(Medico m : listaMedico){
             Medico.pegarHistoricoConsulta(m,listaConsulta);
@@ -42,11 +43,12 @@ public class Main {
                             System.out.println("==========================");
                             System.out.println("1: Cadastrar Médicos :");
                             System.out.println("2: Ver Médicos Cadastrados :");
-                            System.out.println("3: Pesquisar Medico :");
+                            System.out.println("3: Pesquisar medico por CRM :");
                             System.out.println("4: Ver Consultas Agendadas com o Médico :");
                             System.out.println("5: Mudar Especialização : ");
                             System.out.println("6: Excluir Médico do Sistema : ");
-                            System.out.println("7: Mudar o Preço da Consulta");
+                            System.out.println("7: Mudar o Preço da Consulta : ");
+                            System.out.println("8: Pesquisar médico por nome : ");
                             System.out.println("V: para voltar");
                             System.out.println("==========================");
                             entrada2 = scan.next().toUpperCase().charAt(0);
@@ -56,7 +58,7 @@ public class Main {
 //                                Cadastrar Médicos
                                 case '1' -> { // Cadastrar Médico
                                     System.out.println("Escreva na ordem Nome;Cpf;Crm;Idade;Especializacao;CustoConsulta");
-                                    System.out.println("Especializações disponíveis : Cardiologia, Pediatra, Ortopedia, Clinica, Neurologia, Dermatologia");
+                                    System.out.println("Especializações disponíveis : Cardiologia, Pediatra, Ortopedia, Clínica, Neurologia, Dermatologia");
                                     String info = scan.nextLine();
                                     Medico medico = new Medico(info);
                                     if(Medico.encontrarMedicoPorCrm(medico.getCrm(),listaMedico) == null && medico.getValido() && !Medico.CompararCpf(medico.getCpf(), listaPaciente,listaMedico)){
@@ -66,10 +68,10 @@ public class Main {
                                         medico.getInfo();
                                     }
                                     else if(Medico.encontrarMedicoPorCrm(medico.getCrm(),listaMedico) != null && medico.getValido()){
-                                        System.out.println("Não foi possivel registrar, CRM já está sendo utilizado ou formatação invalida");
+                                        System.out.println("Não foi possível registrar, CRM já está sendo utilizado ou formatação invalida");
                                     }
                                     else{
-                                        System.out.println("Não foi possivel registrar, CPF já está sendo utilizado ou formatação invalida");
+                                        System.out.println("Não foi possível registrar, CPF já está sendo utilizado ou formatação invalida");
                                     }
                                 }
 //                                Ver Médicos Cadastrados
@@ -81,9 +83,9 @@ public class Main {
                                         int numero = listaMedico.indexOf(medico) + 1;
                                         System.out.println("Médico : " + numero);
                                         try {
-                                            System.out.println("Nome : " + medico.getNome() + " CPF : " + medico.getCpf() + " CRM : " + medico.getCrm());
-                                            System.out.println("Idade : " + medico.getIdade() + " Especialização : " + medico.getEspecializacao().name());
-                                            System.out.println("Número de Consultas do Médico : " + medico.getHistoricoConsulta().toArray().length);
+                                            System.out.println("Nome : " + medico.getNome() + " ,CPF : " + medico.getCpf() + " ,CRM : " + medico.getCrm());
+                                            System.out.println("Idade : " + medico.getIdade() + " ,Especialização : " + medico.getEspecializacao().name());
+                                            System.out.println("Número de Consultas do Médico : " + medico.getHistoricoConsulta().size());
                                             System.out.println();
                                         }
                                         catch (Exception e) {
@@ -189,6 +191,21 @@ public class Main {
                                     CSV.CSV_Medicoatualizar(listaMedico);
                                     medico.getInfo();
                                 }
+                                //Pesquisar Médico por nome
+                                case '8'->{
+                                    System.out.println("Escreva o nome do Médico:");
+                                    String nome = scan.nextLine();
+                                    boolean achou=false;
+                                    for(Medico m :listaMedico){
+                                        if(m.getNome().toUpperCase().trim().equals(nome.toUpperCase().trim()) && m.getValido()){
+                                            m.getInfo();
+                                            achou=true;
+                                        }
+                                    }
+                                    if(!achou){
+                                        System.out.println("Médico não encontrado");
+                                    }
+                                }
                                 case 'V' -> {
                                     break;
                                 }
@@ -204,10 +221,11 @@ public class Main {
                             System.out.println("==========================");
                             System.out.println("1: Cadastrar Pacientes :");
                             System.out.println("2: Ver Pacientes Cadastrados :");
-                            System.out.println("3: Pesquisar Paciente :");
+                            System.out.println("3: Pesquisar paciente por CPF :");
                             System.out.println("4: Ver histórico de consultas de um Paciente :");
                             System.out.println("5: Mudar Plano de Saude :");
                             System.out.println("6: Excluir Paciente do Sistema : ");
+                            System.out.println("7: Ver histórico de internações de um Paciente : ");
                             System.out.println("V: para voltar");
                             System.out.println("==========================");
                             entrada2 = scan.next().toUpperCase().charAt(0);
@@ -222,7 +240,7 @@ public class Main {
                                     if(!Paciente.CompararCpf(paciente.getCpf(),listaPaciente,listaMedico)  && paciente.getValido()) {
                                         CSV.CSV_Paciente(paciente);
                                         listaPaciente.add(paciente);
-                                        System.out.println("Paciente registrado com Sucesso:");
+                                        System.out.println("Paciente registrado com sucesso:");
                                         paciente.getInfo();
                                     }
                                     else{
@@ -238,8 +256,9 @@ public class Main {
                                         for(Paciente paciente : listaPaciente) {
                                             int numero = listaPaciente.indexOf(paciente) + 1;
                                             System.out.println("Paciente " + numero);
-                                            System.out.println("Nome : " + paciente.getNome() + " CPF : " + paciente.getCpf());
-                                            System.out.println("Idade : " + paciente.getIdade() + " Plano : " + paciente.getPlanoSaude().name());
+                                            System.out.println("Nome : " + paciente.getNome() + " ,CPF : " + paciente.getCpf());
+                                            System.out.println("Idade : " + paciente.getIdade() + " ,Plano : " + paciente.getPlanoSaude().name());
+                                            System.out.println("Numero de Consultas do Paciente : " + paciente.getHistoricoConsulta().size());
                                             System.out.println();
                                         }
                                     }
@@ -332,6 +351,24 @@ public class Main {
                                         System.out.println("Paciente não encontrado");
                                     }
                                 }
+                                case '7'->{
+                                    System.out.println("Escreva o CPF do Paciente");
+                                    String cpf = scan.nextLine();
+                                    Paciente paciente = Paciente.encontrarPaciente(cpf,listaPaciente);
+                                    if(paciente==null){
+                                        System.out.println("Paciente não encontrado");
+                                        break;
+                                    }
+                                    if(paciente.getHistoricoInternacao()!=null && !paciente.getHistoricoInternacao().isEmpty()) {
+                                        System.out.println("Histórico de Internação de : " + paciente.getNome());
+                                        for (Internacao c : paciente.getHistoricoInternacao()) {
+                                            c.getInfo();
+                                        }
+                                    }
+                                    else{
+                                        System.out.println("Nenhum histórico de Internações encontrados para esse paciente");
+                                    }
+                                }
                                 case 'V' -> {
                                     break;
                                 }
@@ -395,11 +432,11 @@ public class Main {
                                         medico.adcionarConsultaHistorico(consulta);
 
                                         CSV.CSV_Consulta(consulta);
-                                        System.out.println("Consulta Registrada:");
+                                        System.out.println("Consulta registrada! :)");
                                         consulta.getInfo();
                                     }
                                     else {
-                                        System.out.println("Cancelando o Cadastro por Horario Conflitante");
+                                        System.out.println("Cancelando o Cadastro por Horário Conflitante");
                                     }
                                 }
 
@@ -414,7 +451,7 @@ public class Main {
                                            try {
                                                int numero = listaConsulta.indexOf(consulta) + 1;
                                                System.out.println("Numero da Consulta : " + numero);
-                                               System.out.println("Paciente : " + consulta.getPaciente().getNome() + " Medico : " + consulta.getMedico().getNome());
+                                               System.out.println("Paciente : " + consulta.getPaciente().getNome() + " ,Medico : " + consulta.getMedico().getNome());
                                                System.out.println("Data : " + consulta.getData() + " Motivo : " + consulta.getMotivo());
                                                System.out.println("Custo da Consulta : " + consulta.getCustoFinal());
                                                System.out.println();
@@ -501,7 +538,7 @@ public class Main {
                                     Paciente paciente = Paciente.encontrarPaciente(Cpf,listaPaciente);
                                     if(paciente == null){
                                         System.out.println("Paciente não encontrado");
-                                        System.out.println("Saindo do Cadastro");
+                                        System.out.println("Saindo do cadastro");
                                         break;
                                     }
                                     boolean taInternado = false;
@@ -550,8 +587,6 @@ public class Main {
                                     }
                                 }
 
-
-
                                 case '2' ->{//Ver todas as Internações
                                     if(listaInterancao.isEmpty()){
                                         System.out.println("Nenhuma internação registrada");
@@ -559,14 +594,13 @@ public class Main {
                                     for(Internacao internacao : listaInterancao){
                                         try {
                                             int numero = listaInterancao.indexOf(internacao) + 1;
+                                            System.out.println("Número da Internação " + numero);
                                             internacao.getInfo();
                                         } catch (Exception e) {
                                             System.err.println("Erro em ler a consulta, paciente não encontrado");
                                         }
                                     }
                                 }
-
-
                                 case '3' ->{ //Finalizar Internação
                                     System.out.println("Escreva o CPF do Paciente Internado");
                                     String cpf = scan.nextLine();
@@ -601,7 +635,6 @@ public class Main {
                             }
                         }
                     }
-
                     case 'X'->{
                         break;
                     }

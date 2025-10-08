@@ -78,7 +78,7 @@ public class Consultas {
         if(medico == null || paciente == null){
             return 0.0;
         }
-        if(medico.getIdade()>=60){
+        if(paciente.getIdade()>=60 && paciente.getPlanoSaude().getDesconto()<=0.9){
             return custo * (1 - 0.9);
         }
         return custo * (1 - desconto);
@@ -103,7 +103,7 @@ public class Consultas {
 
     public void getInfo(){
         System.out.println("==========================");
-        System.out.println("Paciente : " + getPaciente().getNome() + " Plano : " + getPaciente().getPlanoSaude());
+        System.out.println("Paciente : " + getPaciente().getNome() + "  ,Plano : " + getPaciente().getPlanoSaude());
         System.out.println("Medico : " + getMedico().getNome());
         System.out.println("Data : " + getData());
         System.out.println("Motivo : " + getMotivo());

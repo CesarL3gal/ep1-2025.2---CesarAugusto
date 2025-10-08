@@ -26,7 +26,7 @@ public class Internacao {
         try {
         this.paciente = Paciente.encontrarPaciente(partes[0].trim(),listaPaciente);
         if(this.paciente == null){
-            System.out.println("Paciente não encontrado");
+            System.err.println("Paciente não encontrado");
             return;
         }
            try {
@@ -99,6 +99,5 @@ public class Internacao {
         System.out.printf("Custo Diario da Internação : R$ %.2f\n", getCustoDiario(getPaciente()));
         System.out.println("Numero do Quarto : " + getQuarto().getNumero());
         System.out.println("==========================");
-        System.out.println();
     }
 }
