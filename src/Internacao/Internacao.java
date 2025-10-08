@@ -66,6 +66,9 @@ public class Internacao {
     public static double getCustoDiario(Paciente paciente){
         double custo = 150.0;
         double desconto = paciente.getPlanoSaude().getDesconto();
+        if(paciente.getPlanoSaude().getDesconto() == 1.0){
+            return 0.0;
+        }
         if(paciente.getIdade()>=60){
             return custo * (1 - 0.9);
         }
