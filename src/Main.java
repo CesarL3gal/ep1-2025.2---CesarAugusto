@@ -601,6 +601,7 @@ public class Main {
                                         }
                                     }
                                 }
+
                                 case '3' ->{ //Finalizar Internação
                                     System.out.println("Escreva o CPF do Paciente Internado");
                                     String cpf = scan.nextLine();
@@ -613,7 +614,7 @@ public class Main {
                                              internacao.getQuarto().setDesocupado();
                                              internacao.setDataSaida();
                                              internacao.getInfo();
-                                             paciente.getHistoricoInternacao().remove(internacao);
+//                                             paciente.getHistoricoInternacao().remove(internacao);
                                              encontrouInternacao = true;
                                              break;
                                             }

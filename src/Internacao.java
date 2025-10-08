@@ -41,8 +41,10 @@ public class Internacao {
            catch (DateTimeParseException e){
                System.err.println("Erro na formatação das datas");
            }
-
            this.quarto = new Quarto(Integer.parseInt(partes[3].trim()));
+           if(this.dataSaida!=null){
+               this.quarto.setDesocupado();
+           }
            this.custoTotal = Double.parseDouble(partes[4].trim());
        }
        catch (DateTimeParseException e ){
