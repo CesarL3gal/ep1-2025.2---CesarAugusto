@@ -26,7 +26,8 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
    java Main
 
 3. **Estrutura de Pastas:**  
-   Pasta principal é a src, onde tem todas as classes e os arquivos CSV]
+   Pasta principal é a src e as packages também estão dentro dela,
+a Pasta pessoas contem Medicos e Paciente, e as Pastas Internações e Consultas cóntem ,respectivamente , Internações e Consultas
 
 3. **Versão do JAVA utilizada:**  
    [`java 21`]
@@ -41,14 +42,17 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 
 ## Prints da Execução
 
-1. Menu Principal:  
-   ![Inserir Print 1](caminho/do/print1.png)
+1. Menu Principal e Médico:  
+    [img.png](img.png)
 
-2. Cadastro de Médico:  
-   ![Inserir Print 2](caminho/do/print2.png)
+2. Cadastro de Paciente:
+    [img_1.png](img_1.png)
 
-3. Relatório de ?:  
-   ![Inserir Print 3](caminho/do/print3.png)
+4. Consultas:
+   [img_2.png](img_2.png)
+
+4. Internações:
+    [img_3.png](img_3.png)
 
 ---
 
@@ -56,8 +60,9 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 
 ## Observações (Extras ou Dificuldades)
 
-- [Espaço para o aluno comentar qualquer funcionalidade extra que implementou, dificuldades enfrentadas, ou considerações importantes.]
-
+- Esse trabalho serviu bastante pra aprendizado da matéria, quando comecei tive enorme dificuldade com o projeto por não entender o paradigma de OO, ademais da pra citar diversas outras dificuldades que tive, muitas funções eu não conhecia e a relação de objetos, manter o arquivo csv atualizado tmb foram dificeis
+- Um ponto que realmente me pegou bastante foi com os ArrayLists de Objetos e como manter elas e o CSV iguais, além disso, algumas funções de Data da Internação, salvar os quartos e datas foram bem dificeis.
+- Para solucionar o dos quartos criei uma classe quarto para garantir que salve bem a informação de ocupado ou não.
 ---
 
 ## Contato
