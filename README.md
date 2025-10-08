@@ -49,18 +49,26 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 
 ## Prints da Execução
 
-1. Menu Principal e Médico:  
+1. Menu Principal e Médico:
     [img.png](img.png)
-
 2. Cadastro de Paciente:
     [img_1.png](img_1.png)
-
 4. Consultas:
    [img_2.png](img_2.png)
-
 4. Internações:
     [img_3.png](img_3.png)
-
+5. Mostrar Médicos:
+   [img_4.png](img_4.png)
+6. Cadastrar Consulta:
+   [img_5.png](img_5.png)
+7. Desmarcar Consulta:
+   [img_6.png](img_6.png)
+8. Ver Internações:
+   [img_7.png](img_7.png)
+9. Mudar Plano:
+   [img_8.png](img_8.png)
+10. Mudar Especialização:
+   [img_9.png](img_9.png)
 ---
 
 ---
@@ -69,7 +77,7 @@ Desenvolvimento de um sistema de gerenciamento hospitalar utilizando os conceito
 
 - Esse trabalho serviu bastante pra aprendizado da matéria, quando comecei ter enorme dificuldade com o projeto por não entender o paradigma de OO, ademais da pra citar diversas outras dificuldades que tive, muitas funções eu não conhecia e a relação de objetos, manter o arquivo csv atualizado tmb foram dificeis
 - Um ponto que realmente me pegou bastante foi com os ArrayLists de Objetos e como manter elas e o CSV iguais, além disso, algumas funções de Data da Internação, salvar os quartos e datas perfeitamente demandou bastante tempo, para solucionar o dos quartos criei uma classe quarto para garantir que salve bem a informação de ocupado ou não
--  
+
 ---
 
 ## Contato
